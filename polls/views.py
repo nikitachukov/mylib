@@ -2,18 +2,16 @@
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
-from django.http import HttpResponse, Http404
-from django.template import Context,loader
+from django.http import HttpResponse
 from polls.models import Poll
 
 
 def index(request):
-    return render(request,'polls/index.html', {'latest_poll_list': Poll.objects.order_by('-pub_date')[:5]})
+    return render(request, 'polls/index.html', {'latest_poll_list': Poll.objects.order_by('-pub_date')[:5]})
+
 
 def detail(request, poll_id):
     return render(request, 'polls/detail.html', {'poll': get_object_or_404(Poll, pk=poll_id)})
-
-
 
 
 def results(request, poll_id):
