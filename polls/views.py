@@ -1,22 +1,19 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.template import Context,loader
 from polls.models import Poll
 
 
 def index(request):
-    latest_poll_list = Poll.objects.order_by('-pub_date')[:5]
-    template = loader.get_template('polls/index.html')
-    context = Context({'latest_poll_list': latest_poll_list, })
-    return HttpResponse(template.render(context))
-
-
+    return render(request,'polls/index.html', {'latest_poll_list': Poll.objects.order_by('-pub_date')[:5]})
 
 def detail(request, poll_id):
-    return HttpResponse("You're looking at poll %s." % poll_id)
+    return render(request, 'polls/detail.html', {'poll': get_object_or_404(Poll, pk=poll_id)})
+
+
 
 
 def results(request, poll_id):
