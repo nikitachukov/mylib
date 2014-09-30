@@ -7,5 +7,17 @@
 <body>
 import function
 
+{% if import_data %}
+    <ul>
+        {% for autors in import_data %}
+            <li>
+                {{ autors.author_first_name }} {{ autors.author_last_name }} {{ autors.author_middle_name }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available</p>
+{% endif %}
+
 </body>
 </html>

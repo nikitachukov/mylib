@@ -7,4 +7,5 @@ from library import views
 
 urlpatterns = patterns('',
                        url(r'^import/$', views.book_import, name='book_import'),
+                       url(r'^search/$', views.author_search, name='author_search'),
                        )

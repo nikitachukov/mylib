@@ -11,9 +11,9 @@ class Author(models.Model):
     def __str__(self):
         return self.author_first_name + ' ' + self.author_last_name
 
-    author_first_name = models.CharField(max_length=200)
-    author_last_name = models.CharField(max_length=200)
-
+    author_first_name = models.CharField(max_length=100)
+    author_last_name = models.CharField(max_length=100,blank=True)
+    author_idx =models.CharField(max_length=200)
 
 class Book(models.Model):
     class Meta():
@@ -30,6 +30,7 @@ class Book(models.Model):
     book_url = models.URLField(blank=True)
     book_likes = models.IntegerField(default=0)
     book_author = models.ManyToManyField(Author, through='BookAuthor', verbose_name='Авторы книги',null=True)
+
 
 
 class BookAuthor(models.Model):
