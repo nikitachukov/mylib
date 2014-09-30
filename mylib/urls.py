@@ -9,6 +9,7 @@ urlpatterns = patterns('',
                        # Examples:
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^polls/', include('polls.urls',namespace="polls")),
+                       url(r'^library/', include('library.urls',namespace="library")),
 
 
 )

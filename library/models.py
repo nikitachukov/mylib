@@ -26,10 +26,10 @@ class Book(models.Model):
 
     book_name = models.CharField(max_length=200, verbose_name='Название книги')
     book_annotation = models.TextField(verbose_name='Аннотация к книги')
-    book_date = models.DateTimeField()
+    book_date = models.DateTimeField(auto_now_add=True)
     book_url = models.URLField(blank=True)
     book_likes = models.IntegerField(default=0)
-    book_author = models.ManyToManyField(Author, through='BookAuthor', verbose_name='Авторы книги')
+    book_author = models.ManyToManyField(Author, through='BookAuthor', verbose_name='Авторы книги',null=True)
 
 
 class BookAuthor(models.Model):
