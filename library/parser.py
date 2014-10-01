@@ -13,6 +13,7 @@ def find_files_by_mask(location, mask):
             if file.endswith(mask):
                 find_files += [[os.path.join(root, file),
                                 hashlib.md5(open(os.path.join(root, file), 'rb').read()).hexdigest().upper()]]
+    print(location,mask)
     return find_files
 
 
@@ -65,7 +66,7 @@ def parse_files(files):
                         Author['author_middle_name'] = author_middle_name.text.strip()
                     if Author:
                         Authors.append(Author)
-                        Book["Autors"] = Authors
+                        Book["Authors"] = Authors
                 Books.append(Book)
             except Exception as E:
                 print(E)
