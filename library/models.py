@@ -9,11 +9,11 @@ class Author(models.Model):
         verbose_name_plural = 'Авторы'
 
     def __str__(self):
-        return self.author_first_name + ' ' + self.author_last_name
+        return self.firstname + ' ' + self.lastname
 
-    author_first_name = models.CharField(max_length=100)
-    author_last_name = models.CharField(max_length=100,blank=True)
-    author_idx =models.CharField(max_length=200)
+    firstname = models.CharField(max_length=100)
+    lastname = models.CharField(max_length=100,blank=True)
+
 
 class Book(models.Model):
     class Meta():

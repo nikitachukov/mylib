@@ -16,7 +16,7 @@ class BookAdmin(admin.ModelAdmin):
 
 
 class AuthorAdmin(admin.ModelAdmin):
-    fields = ['author_first_name', 'author_last_name']
+    fields = ['firstname', 'lastname']
 
 
 admin.site.register(Book, BookAdmin)
