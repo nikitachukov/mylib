@@ -10,5 +10,6 @@ urlpatterns = patterns('',
                        url(r'^delete/$', views.delete, name='book_delte'),
                        url(r'^search/$', views.author_search, name='author_search'),
                        url(r'^osinfo/$', views.osinfo, name='osinfo'),
+                       url(r'^index/$', views.index, name='index'),
                        url(r'^createuser/$', views.createuser, name='createuser'),
                        )

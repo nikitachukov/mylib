@@ -55,3 +55,6 @@ def delete(request):
         return render(request, "library/result_message.html")
     except Exception as E:
         return render(request, "library/result_message.html", {'error_message': {'error_message': str(E)}})
+
+def index(request):
+    return render(request, "library/index.html")
