@@ -56,14 +56,18 @@ def parse_files(files):
                 for author in description.findall(ns + "author"):
                     Author = {}
                     author_first_name = author.find(ns + "first-name")
+
                     if author_first_name is not None:
+
                         Author['author_first_name'] = author_first_name.text.strip()
                     author_last_name = author.find(ns + "last-name")
                     if author_last_name is not None:
                         Author['author_last_name'] = author_last_name.text.strip()
                     author_middle_name = author.find(ns + "middle-name")
+
                     if author_middle_name is not None:
                         Author['author_middle_name'] = author_middle_name.text.strip()
+
                     if Author:
                         Authors.append(Author)
                         Book["Authors"] = Authors
@@ -80,12 +84,18 @@ def parse_files(files):
 
 def main():
 
-    files = find_files_by_mask("/home/nikitos/Downloads/S.T.A.L.K.E.R__[rutracker.org]/fb2", ".fb2")
+    import platform
+    if platform.node().upper() == "LENOVO":
+        path = "/home/nikitos/Downloads/S.T.A.L.K.E.R__[rutracker.org]/"
+    else:
+        path = "c:\\Downloads\\S.T.A.L.K.E.R__[rutracker.org]"
+
+    files = find_files_by_mask(path, ".fb2")
     # print(parse_files(files))
 
     for book in parse_files(files):
-        if 'Autors' in book.keys():
-            print(book['Autors'])
+        if 'Authors' in book.keys():
+            print(book['Authors'])
 
 if __name__ == "__main__":
     main()
