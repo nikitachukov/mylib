@@ -60,7 +60,7 @@ def delete(request):
         return render_to_response("library/result_message.html", {'error_message': {'error_message': str(E)}})
 
 
-@login_required()
+@login_required
 def index(request):
     # return render(request, "library/index.html")
     return render_to_response("library/index.html")
