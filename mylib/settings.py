@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'library',
     'polls',
+    'authsys',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -88,3 +89,6 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
+
+# LOGIN_URL = '/auth/login',
+LOGIN_URL = '/auth/login/'

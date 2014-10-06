@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 # Create your views here.
@@ -8,16 +8,16 @@ from polls.models import Poll,Choice
 
 
 def index(request):
-    return render(request, 'polls/index.html', {'latest_poll_list': Poll.objects.order_by('-pub_date')[:5]})
+    return render_to_response('polls/index.html', {'latest_poll_list': Poll.objects.order_by('-pub_date')[:5]})
 
 
 def detail(request, poll_id):
-    return render(request, 'polls/detail.html', {'poll': get_object_or_404(Poll, pk=poll_id)})
+    return render_to_response('polls/detail.html', {'poll': get_object_or_404(Poll, pk=poll_id)})
 
 
 def results(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
-    return render(request, 'polls/results.html', {'poll': poll})
+    return render_to_response('polls/results.html', {'poll': poll})
 
 
 def vote(request, poll_id):
@@ -26,7 +26,7 @@ def vote(request, poll_id):
         selected_choice = p.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the poll voting form.
-        return render(request, 'polls/detail.html', {
+        return render_to_response('polls/detail.html', {
             'poll': p,
             'error_message': "You didn't select a choice.",
         })

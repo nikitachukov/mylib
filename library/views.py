@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from library.models import *
 from library.parser import *
@@ -21,13 +22,13 @@ def book_import(request):
                 lastname = author['author_last_name']
                 if not (Author.objects.filter(firstname=firstname, lastname=lastname)):
                     dbauthor = Author(lastname=author['author_last_name'],
-                                    firstname=author['author_first_name']
+                                      firstname=author['author_first_name']
                     )
                     dbauthor.save()
 
-                    a+=[author]
+                    a += [author]
 
-    return render(request, "library/import.html", {'import_data': a})
+    return render_to_response("library/import.html", {'import_data': a})
 
 
 def author_search(request):
@@ -35,26 +36,32 @@ def author_search(request):
 
 
 def osinfo(request):
-    return render(request, "library/osinfo.html", {'osinfo': {'sysname': os.uname()[0],
-                                                              'nodename': os.uname()[1],
-                                                              'release': os.uname()[2],
-                                                              'version': os.uname()[3],
-                                                              'machine': os.uname()[4]}})
+    return render_to_response("library/osinfo.html", {'osinfo': {'sysname': os.uname()[0],
+                                                                 'nodename': os.uname()[1],
+                                                                 'release': os.uname()[2],
+                                                                 'version': os.uname()[3],
+                                                                 'machine': os.uname()[4]}})
+
 
 def createuser(request):
     try:
         u = User.objects.create_superuser(username='nikitos', email='xx@xx.ru', password="admin4all")
         u.save()
-        return render(request, "library/result_message.html")
+        return render_to_response("library/result_message.html")
     except Exception as E:
-        return render(request, "library/result_message.html", {'error_message': {'error_message': str(E)}})
+        return render_to_response("library/result_message.html", {'error_message': {'error_message': str(E)}})
+
 
 def delete(request):
     try:
         Author.objects.all().delete()
-        return render(request, "library/result_message.html")
+        return render_to_response("library/result_message.html")
     except Exception as E:
-        return render(request, "library/result_message.html", {'error_message': {'error_message': str(E)}})
+        return render_to_response("library/result_message.html", {'error_message': {'error_message': str(E)}})
 
+
+@login_required()
 def index(request):
-    return render(request, "library/index.html")
+    # return render(request, "library/index.html")
+    return render_to_response("library/index.html")
+

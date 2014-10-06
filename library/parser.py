@@ -6,6 +6,7 @@ from lxml import etree
 
 __author__ = 'ChukovNA'
 
+
 def find_files_by_mask(location, mask):
     find_files = []
     for root, dirs, files in os.walk(location):
@@ -13,7 +14,7 @@ def find_files_by_mask(location, mask):
             if file.endswith(mask):
                 find_files += [[os.path.join(root, file),
                                 hashlib.md5(open(os.path.join(root, file), 'rb').read()).hexdigest().upper()]]
-    print(location,mask)
+    print(location, mask)
     return find_files
 
 
@@ -58,7 +59,6 @@ def parse_files(files):
                     author_first_name = author.find(ns + "first-name")
 
                     if author_first_name is not None:
-
                         Author['author_first_name'] = author_first_name.text.strip()
                     author_last_name = author.find(ns + "last-name")
                     if author_last_name is not None:
@@ -83,8 +83,8 @@ def parse_files(files):
 
 
 def main():
-
     import platform
+
     if platform.node().upper() == "LENOVO":
         path = "/home/nikitos/Downloads/S.T.A.L.K.E.R__[rutracker.org]/"
     else:
@@ -96,6 +96,7 @@ def main():
     for book in parse_files(files):
         if 'Authors' in book.keys():
             print(book['Authors'])
+
 
 if __name__ == "__main__":
     main()

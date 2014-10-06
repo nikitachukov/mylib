@@ -12,7 +12,7 @@ class Author(models.Model):
         return self.firstname + ' ' + self.lastname
 
     firstname = models.CharField(max_length=100)
-    lastname = models.CharField(max_length=100,blank=True)
+    lastname = models.CharField(max_length=100, blank=True)
 
 
 class Book(models.Model):
@@ -29,8 +29,7 @@ class Book(models.Model):
     book_date = models.DateTimeField(auto_now_add=True)
     book_url = models.URLField(blank=True)
     book_likes = models.IntegerField(default=0)
-    book_author = models.ManyToManyField(Author, through='BookAuthor', verbose_name='Авторы книги',null=True)
-
+    book_author = models.ManyToManyField(Author, through='BookAuthor', verbose_name='Авторы книги', null=True)
 
 
 class BookAuthor(models.Model):
