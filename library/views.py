@@ -7,7 +7,7 @@ from library.parser import *
 import platform
 import os
 
-
+@login_required
 def book_import(request):
     if platform.node().upper() == "LENOVO":
         path = "/home/nikitos/Downloads/S.T.A.L.K.E.R__[rutracker.org]/"
@@ -34,7 +34,7 @@ def book_import(request):
 def author_search(request):
     pass
 
-
+@login_required
 def osinfo(request):
     return render_to_response("library/osinfo.html", {'osinfo': {'sysname': os.uname()[0],
                                                                  'nodename': os.uname()[1],
@@ -52,6 +52,7 @@ def createuser(request):
         return render_to_response("library/result_message.html", {'error_message': {'error_message': str(E)}})
 
 
+@login_required
 def delete(request):
     try:
         Author.objects.all().delete()
@@ -62,6 +63,5 @@ def delete(request):
 
 @login_required
 def index(request):
-    # return render(request, "library/index.html")
-    return render_to_response("library/index.html")
+    return render_to_response("library/index.html", {'user': request.user})
 
