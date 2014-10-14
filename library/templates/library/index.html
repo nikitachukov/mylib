@@ -14,8 +14,8 @@
     <p>Welcome, new user. Please log in.</p>
 {% endif %}
 
-<li><a href="{% static "dog.jpg" %}">dog</a></li>
-<li><a href="{% static "cat.jpg" %}">cat</a></li>
+<li><a href="{% static "cat.jpg" %}">cat (global static)</a></li>
+<li><a href="{% static "dog.jpg" %}">dog (app static)</a></li>
 <li><a href="{% url 'admin:index' %}">admin</a></li>
 <li><a href="{% url 'library:osinfo' %}">osinfo</a></li>
 <li><a href="{% url 'library:book_import' %}">book import</a></li>
