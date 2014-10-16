@@ -19,10 +19,18 @@ def login(request):
             return redirect('/')
         else:
             args['login_error'] = 'Пользователь не найден'
-            return render_to_response('authsys/login.html', args)
+            return render_to_response('account/login.html', args)
     else:
-        return render_to_response('authsys/login.html', args)
+        return render_to_response('account/login.html', args)
 
+
+def resetpassord(request):
+    args = {}
+    args.update(csrf(request))
+    if request.POST:
+        pass
+    else:
+        return render_to_response('account/resetpassword.html', args)
 
 def logout(request):
     auth.logout(request)

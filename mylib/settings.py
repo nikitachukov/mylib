@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'library',
     'polls',
-    'authsys',
+    'account',
 )
 
 MIDDLEWARE_CLASSES = (

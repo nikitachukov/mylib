@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+
+    {% load staticfiles %}
+    <link href={% static "css/bootstrap.min.css" %} rel="stylesheet">
+    <link href={% static "css/bootstrap.min.css" %} rel="stylesheet">
+    <link href={% static "css/signin.css" %} rel="stylesheet">
+
+
+</head>
+<body>
+
+
+<div class="container">
+
+    <form action="/auth/login/" method="post" class="form-signin" role="form">
+        {% csrf_token %}
+
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="text" class="form-control" placeholder="username" id="username" name="username" required autofocus>
+        <input type="password" class="form-control" placeholder="Password" id="password" name="password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+
+        {% if login_error %}
+            <div class="alert alert-danger" role="alert">
+                <p class="text-center">{{ login_error }}</p>
+
+                <p class="text-center"><a href="/auth/resetpassword">Сбросить пароль</a></p>
+            </div>
+        {% endif %}
+
+
+    </form>
+</div>
+
+
+</body>
+</html>

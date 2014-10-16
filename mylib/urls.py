@@ -9,10 +9,10 @@ urlpatterns = patterns('',
                        # Examples:
 
                        url(r'^admin/', include(admin.site.urls)),
-                       url(r'^polls/', include('polls.urls',namespace="polls")),
-                       url(r'^library/', include('library.urls',namespace="library")),
+                       url(r'^polls/', include('polls.urls', namespace="polls")),
+                       url(r'^library/', include('library.urls', namespace="library")),
 
-                       url(r'^auth/', include('authsys.urls', namespace="authsys")),
+                       url(r'^auth/', include('account.urls', namespace="account")),
 
                        url(r'^$', lambda x: HttpResponseRedirect('/library/index')),
 
