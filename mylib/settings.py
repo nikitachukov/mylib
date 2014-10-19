@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import keyring
+from platform import node
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -66,6 +68,18 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+if node().upper() == "LENOVO":
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = 'nikitachukov@gmail.com'
+    EMAIL_HOST_PASSWORD = keyring.get_password("GMAIL_PASSWORD", EMAIL_HOST_USER )
+    DEFAULT_FROM_EMAIL = 'nikitachukov@gmail.com'
+    DEFAULT_TO_EMAIL = 'nikitachukov@gmail.com'
+else:
+    pass
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

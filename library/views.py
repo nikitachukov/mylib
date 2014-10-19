@@ -4,12 +4,13 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from library.models import *
 from library.parser import *
-import platform
+from platform import node
 import os
+import uuid
 
 @login_required
 def book_import(request):
-    if platform.node().upper() == "LENOVO":
+    if node().upper() == "LENOVO":
         path = "/home/nikitos/Downloads/S.T.A.L.K.E.R__[rutracker.org]/"
     else:
         path = "c:\\Downloads\\S.T.A.L.K.E.R__[rutracker.org]"
@@ -65,3 +66,14 @@ def delete(request):
 def index(request):
     return render_to_response("library/index.html", {'user': request.user})
 
+
+@login_required
+def testemail(request):
+    from django.core.mail import EmailMessage
+    email = EmailMessage('Hello', """
+    Email from django
+    reset password link
+    %s
+    """ % (uuid.uuid4()), to=['nikitachukov@me.com'])
+
+    email.send()
