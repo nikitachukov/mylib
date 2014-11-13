@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+    <object model="library.bookgenre" pk="adv_indian ">
+        <field name="genre_name" type="CharField">Приключения про индейцев</field>
+    </object>
+    <object model="library.bookgenre" pk="adv_maritime ">
+        <field name="genre_name" type="CharField">Морские приключения</field>
+    </object>
+    <object model="library.bookgenre" pk="adv_western ">
+        <field name="genre_name" type="CharField">Вестерн</field>
+    </object>
+    <object model="library.bookgenre" pk="adventure ">
+        <field name="genre_name" type="CharField">Прочие приключения (то, что не вошло в другие категории)</field>
+    </object>
+    <object model="library.bookgenre" pk="antique ">
+        <field name="genre_name" type="CharField">Прочая старинная литература (то, что не вошло в другие категории)
+        </field>
+    </object>
+    <object model="library.bookgenre" pk="antique_ant ">
+        <field name="genre_name" type="CharField">Античная литература</field>
+    </object>
+    <object model="library.bookgenre" pk="antique_east ">
+        <field name="genre_name" type="CharField">Древневосточная литература</field>
+    </object>
+    <object model="library.bookgenre" pk="antique_european ">
+        <field name="genre_name" type="CharField">Европейская старинная литература</field>
+    </object>
+    <object model="library.bookgenre" pk="antique_myths ">
+        <field name="genre_name" type="CharField">Мифы. Легенды. Эпос</field>
+    </object>
+    <object model="library.bookgenre" pk="antique_russian ">
+        <field name="genre_name" type="CharField">Древнерусская литература</field>
+    </object>
+    <object model="library.bookgenre" pk="child_adv ">
+        <field name="genre_name" type="CharField">Детские приключения</field>
+    </object>
+    <object model="library.bookgenre" pk="child_det ">
+        <field name="genre_name" type="CharField">Детские остросюжетные</field>
+    </object>
+    <object model="library.bookgenre" pk="child_education ">
+        <field name="genre_name" type="CharField">Детская образовательная литература</field>
+    </object>
+    <object model="library.bookgenre" pk="child_prose ">
+        <field name="genre_name" type="CharField">Детскиая проза</field>
+    </object>
+    <object model="library.bookgenre" pk="child_sf ">
+        <field name="genre_name" type="CharField">Детская фантастика</field>
+    </object>
+    <object model="library.bookgenre" pk="child_tale ">
+        <field name="genre_name" type="CharField">Сказка</field>
+    </object>
+    <object model="library.bookgenre" pk="child_verse ">
+        <field name="genre_name" type="CharField">Детские стихи</field>
+    </object>
+    <object model="library.bookgenre" pk="children ">
+        <field name="genre_name" type="CharField">Прочая детская литература (то, что не вошло в другие категории)
+        </field>
+    </object>
+    <object model="library.bookgenre" pk="comp_db ">
+        <field name="genre_name" type="CharField">Базы данных</field>
+    </object>
+    <object model="library.bookgenre" pk="comp_hard ">
+        <field name="genre_name" type="CharField">Компьютерное железо (аппаратное обеспечение)</field>
+    </object>
+    <object model="library.bookgenre" pk="comp_osnet ">
+        <field name="genre_name" type="CharField">ОС и Сети</field>
+    </object>
+    <object model="library.bookgenre" pk="comp_programming ">
+        <field name="genre_name" type="CharField">Программирование</field>
+    </object>
+    <object model="library.bookgenre" pk="comp_soft ">
+        <field name="genre_name" type="CharField">Программы</field>
+    </object>
+    <object model="library.bookgenre" pk="comp_www ">
+        <field name="genre_name" type="CharField">Интернет</field>
+    </object>
+    <object model="library.bookgenre" pk="computers ">
+        <field name="genre_name" type="CharField">Прочая околокомпьтерная литература (то, что не вошло в другие
+            категории)
+        </field>
+    </object>
+    <object model="library.bookgenre" pk="design ">
+        <field name="genre_name" type="CharField">Искусство и Дизайн</field>
+    </object>
+    <object model="library.bookgenre" pk="det_action ">
+        <field name="genre_name" type="CharField">Боевик</field>
+    </object>
+    <object model="library.bookgenre" pk="det_classic ">
+        <field name="genre_name" type="CharField">Классический детектив</field>
+    </object>
+    <object model="library.bookgenre" pk="det_crime ">
+        <field name="genre_name" type="CharField">Криминальный детектив</field>
+    </object>
+    <object model="library.bookgenre" pk="det_espionage ">
+        <field name="genre_name" type="CharField">Шпионский детектив</field>
+    </object>
+    <object model="library.bookgenre" pk="det_hard ">
+        <field name="genre_name" type="CharField">Крутой детектив</field>
+    </object>
+    <object model="library.bookgenre" pk="det_history ">
+        <field name="genre_name" type="CharField">Исторический детектив</field>
+    </object>
+    <object model="library.bookgenre" pk="det_irony ">
+        <field name="genre_name" type="CharField">Иронический детектив</field>
+    </object>
+    <object model="library.bookgenre" pk="det_maniac ">
+        <field name="genre_name" type="CharField">Маньяки</field>
+    </object>
+    <object model="library.bookgenre" pk="det_police ">
+        <field name="genre_name" type="CharField">Полицейский детектив</field>
+    </object>
+    <object model="library.bookgenre" pk="det_political ">
+        <field name="genre_name" type="CharField">Политический детектив</field>
+    </object>
+    <object model="library.bookgenre" pk="detective ">
+        <field name="genre_name" type="CharField">Детектив (не относящийся в прочие категории).</field>
+    </object>
+    <object model="library.bookgenre" pk="dramaturgy ">
+        <field name="genre_name" type="CharField">Драматургия</field>
+    </object>
+    <object model="library.bookgenre" pk="home ">
+        <field name="genre_name" type="CharField">Прочиее домоводство (то, что не вошло в другие категории)</field>
+    </object>
+    <object model="library.bookgenre" pk="home_cooking ">
+        <field name="genre_name" type="CharField">Кулинария</field>
+    </object>
+    <object model="library.bookgenre" pk="home_crafts ">
+        <field name="genre_name" type="CharField">Хобби и ремесла</field>
+    </object>
+    <object model="library.bookgenre" pk="home_diy ">
+        <field name="genre_name" type="CharField">Сделай сам</field>
+    </object>
+    <object model="library.bookgenre" pk="home_entertain ">
+        <field name="genre_name" type="CharField">Развлечения</field>
+    </object>
+    <object model="library.bookgenre" pk="home_garden ">
+        <field name="genre_name" type="CharField">Сад и огород</field>
+    </object>
+    <object model="library.bookgenre" pk="home_health ">
+        <field name="genre_name" type="CharField">Здоровье</field>
+    </object>
+    <object model="library.bookgenre" pk="home_pets ">
+        <field name="genre_name" type="CharField">Домашние животные</field>
+    </object>
+    <object model="library.bookgenre" pk="home_sex ">
+        <field name="genre_name" type="CharField">Эротика, Секс</field>
+    </object>
+    <object model="library.bookgenre" pk="home_sport ">
+        <field name="genre_name" type="CharField">Спорт</field>
+    </object>
+    <object model="library.bookgenre" pk="humor ">
+        <field name="genre_name" type="CharField">Прочий юмор (то, что не вошло в другие категории)</field>
+    </object>
+    <object model="library.bookgenre" pk="humor_anecdote ">
+        <field name="genre_name" type="CharField">Анекдоты</field>
+    </object>
+    <object model="library.bookgenre" pk="humor_prose ">
+        <field name="genre_name" type="CharField">Юмористическая проза</field>
+    </object>
+    <object model="library.bookgenre" pk="humor_verse ">
+        <field name="genre_name" type="CharField">Юмористические стихи</field>
+    </object>
+    <object model="library.bookgenre" pk="love_contemporary ">
+        <field name="genre_name" type="CharField">Современные любовные романы</field>
+    </object>
+    <object model="library.bookgenre" pk="love_detective ">
+        <field name="genre_name" type="CharField">Остросюжетные любовные романы</field>
+    </object>
+    <object model="library.bookgenre" pk="love_erotica ">
+        <field name="genre_name" type="CharField">Эротика</field>
+    </object>
+    <object model="library.bookgenre" pk="love_history ">
+        <field name="genre_name" type="CharField">Исторические любовные романы</field>
+    </object>
+    <object model="library.bookgenre" pk="love_short ">
+        <field name="genre_name" type="CharField">Короткие любовные романы</field>
+    </object>
+    <object model="library.bookgenre" pk="nonf_biography ">
+        <field name="genre_name" type="CharField">Биографии и Мемуары</field>
+    </object>
+    <object model="library.bookgenre" pk="nonf_criticism ">
+        <field name="genre_name" type="CharField">Критика</field>
+    </object>
+    <object model="library.bookgenre" pk="nonf_publicism ">
+        <field name="genre_name" type="CharField">Публицистика</field>
+    </object>
+    <object model="library.bookgenre" pk="nonfiction ">
+        <field name="genre_name" type="CharField">Прочая документальная литература (то, что не вошло в другие
+            категории)
+        </field>
+    </object>
+    <object model="library.bookgenre" pk="poetry ">
+        <field name="genre_name" type="CharField">Поэзия</field>
+    </object>
+    <object model="library.bookgenre" pk="prose_classic ">
+        <field name="genre_name" type="CharField">Классическая проза</field>
+    </object>
+    <object model="library.bookgenre" pk="prose_contemporary ">
+        <field name="genre_name" type="CharField">Современная проза</field>
+    </object>
+    <object model="library.bookgenre" pk="prose_counter ">
+        <field name="genre_name" type="CharField">Контркультура</field>
+    </object>
+    <object model="library.bookgenre" pk="prose_history ">
+        <field name="genre_name" type="CharField">Историческая проза</field>
+    </object>
+    <object model="library.bookgenre" pk="prose_rus_classic ">
+        <field name="genre_name" type="CharField">Русская классическая проза</field>
+    </object>
+    <object model="library.bookgenre" pk="prose_su_classics ">
+        <field name="genre_name" type="CharField">Советская классическая проза</field>
+    </object>
+    <object model="library.bookgenre" pk="ref_dict ">
+        <field name="genre_name" type="CharField">Словари</field>
+    </object>
+    <object model="library.bookgenre" pk="ref_encyc ">
+        <field name="genre_name" type="CharField">Энциклопедии</field>
+    </object>
+    <object model="library.bookgenre" pk="ref_guide ">
+        <field name="genre_name" type="CharField">Руководства</field>
+    </object>
+    <object model="library.bookgenre" pk="ref_ref ">
+        <field name="genre_name" type="CharField">Справочники</field>
+    </object>
+    <object model="library.bookgenre" pk="reference ">
+        <field name="genre_name" type="CharField">Прочая справочная литература (то, что не вошло в другие категории)
+        </field>
+    </object>
+    <object model="library.bookgenre" pk="religion ">
+        <field name="genre_name" type="CharField">Прочая религионая литература (то, что не вошло в другие категории)
+        </field>
+    </object>
+    <object model="library.bookgenre" pk="religion_esoterics ">
+        <field name="genre_name" type="CharField">Эзотерика</field>
+    </object>
+    <object model="library.bookgenre" pk="religion_rel ">
+        <field name="genre_name" type="CharField">Религия</field>
+    </object>
+    <object model="library.bookgenre" pk="religion_self ">
+        <field name="genre_name" type="CharField">Самосовершенствование</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_biology ">
+        <field name="genre_name" type="CharField">Биология</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_business ">
+        <field name="genre_name" type="CharField">Деловая литература</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_chem ">
+        <field name="genre_name" type="CharField">Химия</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_culture ">
+        <field name="genre_name" type="CharField">Культурология</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_history ">
+        <field name="genre_name" type="CharField">История</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_juris ">
+        <field name="genre_name" type="CharField">Юриспруденция</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_linguistic ">
+        <field name="genre_name" type="CharField">Языкознание</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_math ">
+        <field name="genre_name" type="CharField">Математика</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_medicine ">
+        <field name="genre_name" type="CharField">Медицина</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_philosophy ">
+        <field name="genre_name" type="CharField">Философия</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_phys ">
+        <field name="genre_name" type="CharField">Физика</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_politics ">
+        <field name="genre_name" type="CharField">Политика</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_psychology ">
+        <field name="genre_name" type="CharField">Психология</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_religion ">
+        <field name="genre_name" type="CharField">Религиоведение</field>
+    </object>
+    <object model="library.bookgenre" pk="sci_tech ">
+        <field name="genre_name" type="CharField">Технические науки</field>
+    </object>
+    <object model="library.bookgenre" pk="science ">
+        <field name="genre_name" type="CharField">Прочая научная литература (то, что не вошло в другие категории)
+        </field>
+    </object>
+    <object model="library.bookgenre" pk="sf ">
+        <field name="genre_name" type="CharField">Научная Фантастика</field>
+    </object>
+    <object model="library.bookgenre" pk="sf_action ">
+        <field name="genre_name" type="CharField">Боевая фантастика</field>
+    </object>
+    <object model="library.bookgenre" pk="sf_cyberpunk ">
+        <field name="genre_name" type="CharField">Киберпанк</field>
+    </object>
+    <object model="library.bookgenre" pk="sf_detective ">
+        <field name="genre_name" type="CharField">Детективная фантастика</field>
+    </object>
+    <object model="library.bookgenre" pk="sf_epic ">
+        <field name="genre_name" type="CharField">Эпическая фантастика</field>
+    </object>
+    <object model="library.bookgenre" pk="sf_fantasy ">
+        <field name="genre_name" type="CharField">Фэнтези</field>
+    </object>
+    <object model="library.bookgenre" pk="sf_heroic ">
+        <field name="genre_name" type="CharField">Героическая фантастика</field>
+    </object>
+    <object model="library.bookgenre" pk="sf_history ">
+        <field name="genre_name" type="CharField">Альтернативная история</field>
+    </object>
+    <object model="library.bookgenre" pk="sf_horror ">
+        <field name="genre_name" type="CharField">Ужасы и Мистика</field>
+    </object>
+    <object model="library.bookgenre" pk="sf_humor ">
+        <field name="genre_name" type="CharField">Юмористическая фантастика</field>
+    </object>
+    <object model="library.bookgenre" pk="sf_social ">
+        <field name="genre_name" type="CharField">Социально психологическая фантастика</field>
+    </object>
+    <object model="library.bookgenre" pk="sf_space ">
+        <field name="genre_name" type="CharField">Космическая фантастика</field>
+    </object>
+    <object model="library.bookgenre" pk="thriller ">
+        <field name="genre_name" type="CharField">Триллер</field>
+    </object>
+</django-objects>

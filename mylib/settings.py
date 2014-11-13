@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor',
     'library',
     'polls',
     'account',
@@ -74,12 +75,13 @@ if node().upper() == "LENOVO":
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_PORT = 587
     EMAIL_HOST_USER = 'nikitachukov@gmail.com'
-    EMAIL_HOST_PASSWORD = keyring.get_password("GMAIL_PASSWORD", EMAIL_HOST_USER )
+    EMAIL_HOST_PASSWORD = keyring.get_password("GMAIL_PASSWORD", EMAIL_HOST_USER)
     DEFAULT_FROM_EMAIL = 'nikitachukov@gmail.com'
     DEFAULT_TO_EMAIL = 'nikitachukov@gmail.com'
 # else:
 elif node().upper() == "MSK02AL-D203LL":
-    print(keyring.set_keyring())
+    # print(keyring.set_keyring())
+    pass
 
 
 # Internationalization
@@ -111,3 +113,11 @@ TEMPLATE_DIRS = (
 
 LOGIN_OUT = '/auth/logout/',
 LOGIN_URL = '/auth/login/'
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+CKEDITOR_CONFIGS = {
+    'awesome_ckeditor': {
+        'toolbar': 'Basic',
+    },
+}

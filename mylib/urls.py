@@ -15,6 +15,7 @@ urlpatterns = patterns('',
                        url(r'^auth/', include('account.urls', namespace="account")),
 
                        url(r'^$', lambda x: HttpResponseRedirect('/library/index')),
+                       url(r'^ckeditor/', include('ckeditor.urls')),
 
 
 )

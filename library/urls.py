@@ -13,4 +13,6 @@ urlpatterns = patterns('',
                        url(r'^index/$', views.index, name='index'),
                        url(r'^createuser/$', views.createuser, name='createuser'),
                        url(r'^testemail/$', views.testemail, name='testemail'),
+                       url(r'^downloadgenres/$', views.downloadgenres, name='downloadgenres'),
+                       url(r'^ck/$', views.testck, name='testck'),
 )
