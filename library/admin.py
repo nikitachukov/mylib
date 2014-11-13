@@ -10,8 +10,8 @@ class AuthorInline(admin.TabularInline):
 
 
 class BookAdmin(admin.ModelAdmin):
-    fields = ['book_name', 'book_annotation', 'book_md5']
-    list_filter = ['book_name', 'book_author']
+    fields = ['book_name', 'book_genre', 'book_annotation', 'book_md5']
+    list_filter = ['book_name', 'book_genre', 'book_author']
     inlines = [AuthorInline, ]
 
 

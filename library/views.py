@@ -29,21 +29,20 @@ def book_import(request):
                 Author.objects.filter(firstname=author['author_first_name'], lastname=author['author_last_name'])):
                     Author(lastname=author['author_last_name'], firstname=author['author_first_name']).save()
                     a += [author]
-                    Book(book_name=book['title'], book_md5=book['md5'], book_annotation=book['Annotation']).save()
 
-                print(book.keys())
-                print(book['Genre'])
+                    # print(book['Genre'][0])
 
 
 
+                    Book(book_name=book['title'],
+                         book_md5=book['md5'],
+                         # book_annotation=book['Annotation'],
 
+                         book_genre=BookGenre.objects.get(pk=book['Genre'][0])).save()
+                # # print()
 
-                # book_name
-                # book_annotation
-                # book_date
-                # book_url
-                # book_likes
-                # book_author
+                print(book['Genre'][0])
+                print(BookGenre.objects.get(pk=book['Genre'][0]))
 
     return render_to_response("library/import.html", {'import_data': a})
 
