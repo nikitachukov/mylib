@@ -40,7 +40,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ckeditor',
     'library',
     'polls',
     'account',
@@ -75,13 +74,12 @@ if node().upper() == "LENOVO":
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_PORT = 587
     EMAIL_HOST_USER = 'nikitachukov@gmail.com'
-    EMAIL_HOST_PASSWORD = keyring.get_password("GMAIL_PASSWORD", EMAIL_HOST_USER)
+    EMAIL_HOST_PASSWORD = keyring.get_password("GMAIL_PASSWORD", EMAIL_HOST_USER )
     DEFAULT_FROM_EMAIL = 'nikitachukov@gmail.com'
     DEFAULT_TO_EMAIL = 'nikitachukov@gmail.com'
 # else:
 elif node().upper() == "MSK02AL-D203LL":
-    # print(keyring.set_keyring())
-    pass
+    print(keyring.set_keyring())
 
 
 # Internationalization
@@ -114,10 +112,19 @@ TEMPLATE_DIRS = (
 LOGIN_OUT = '/auth/logout/',
 LOGIN_URL = '/auth/login/'
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
-CKEDITOR_CONFIGS = {
-    'awesome_ckeditor': {
-        'toolbar': 'Basic',
-    },
-}
+INSTALLED_APPS += ("djcelery", )
+
+# адрес redis сервера
+BROKER_URL = 'redis://localhost:6379/0'
+# храним результаты выполнения задач так же в redis
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+# в течение какого срока храним результаты, после чего они удаляются
+CELERY_TASK_RESULT_EXPIRES = 7*86400  # 7 days
+# это нужно для мониторинга наших воркеров
+CELERY_SEND_EVENTS = True
+# место хранения периодических задач (данные для планировщика)
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+
+# в конец settings.py добавляем строчки
+import djcelery
+djcelery.setup_loader()
