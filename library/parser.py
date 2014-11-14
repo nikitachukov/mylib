@@ -3,6 +3,7 @@
 import os
 import hashlib
 from lxml import etree
+import base64
 
 __author__ = 'ChukovNA'
 
@@ -54,6 +55,16 @@ def parse_files(files):
                             Annotation += child.text
                             Book["Annotation"] = Annotation
 
+                for cover in description.findall(ns + "coverpage"):
+                    for child in cover:
+                        if (child is not None):
+                            binary = book.getroot().find(ns + "binary")
+                            if (binary.attrib['id'] ==
+                                    child.attrib.get('{http://www.w3.org/1999/xlink}href')[1:]):
+                                with open(binary.attrib['id'], 'wb') as f:
+                                    f.write(base64.b64decode(binary.text))
+                                    f.close()
+
                 for author in description.findall(ns + "author"):
                     Author = {}
                     author_first_name = author.find(ns + "first-name")
@@ -71,6 +82,7 @@ def parse_files(files):
                     if Author:
                         Authors.append(Author)
                         Book["Authors"] = Authors
+
                 Books.append(Book)
             except Exception as E:
                 print(E)
