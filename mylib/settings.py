@@ -52,6 +52,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 )
 
 ROOT_URLCONF = 'mylib.urls'
@@ -79,7 +80,8 @@ if node().upper() == "LENOVO":
     DEFAULT_TO_EMAIL = 'nikitachukov@gmail.com'
 # else:
 elif node().upper() == "MSK02AL-D203LL":
-    print(keyring.set_keyring())
+    # print(keyring.set_keyring())
+    pass
 
 
 # Internationalization
@@ -111,20 +113,3 @@ TEMPLATE_DIRS = (
 
 LOGIN_OUT = '/auth/logout/',
 LOGIN_URL = '/auth/login/'
-
-INSTALLED_APPS += ("djcelery", )
-
-# адрес redis сервера
-BROKER_URL = 'redis://localhost:6379/0'
-# храним результаты выполнения задач так же в redis
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-# в течение какого срока храним результаты, после чего они удаляются
-CELERY_TASK_RESULT_EXPIRES = 7*86400  # 7 days
-# это нужно для мониторинга наших воркеров
-CELERY_SEND_EVENTS = True
-# место хранения периодических задач (данные для планировщика)
-CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
-
-# в конец settings.py добавляем строчки
-import djcelery
-djcelery.setup_loader()

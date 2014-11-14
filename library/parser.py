@@ -39,7 +39,7 @@ def parse_files(files):
 
                 description = book.getroot().find(ns + "description/")
 
-                Book = {"md5": file[1]}
+                Book = {"md5": file[1], 'filename': os.path.basename((file[0]))}
 
                 for title in description.findall(ns + "book-title"):
                     Book["title"] = title.text
@@ -88,14 +88,15 @@ def main():
     if platform.node().upper() == "LENOVO":
         path = "/home/nikitos/Downloads/S.T.A.L.K.E.R__[rutracker.org]/fb2/"
     else:
-        path = "c:\\Downloads\\S.T.A.L.K.E.R__[rutracker.org]"
+        path = "c:\\Downloads\\S.T.A.L.K.E.R__[rutracker.org]\\fb2+++\\"
 
     files = find_files_by_mask(path, ".fb2")
     # print(parse_files(files))
 
     for book in parse_files(files):
-        if 'Authors' in book.keys():
-            print(book['Authors'])
+        print(book)
+        # if 'Authors' in book.keys():
+        # print(book['Authors'])
 
 
 if __name__ == "__main__":

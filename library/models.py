@@ -49,15 +49,16 @@ class Book(models.Model):
     book_date = models.DateTimeField(auto_now_add=True)
     book_url = models.URLField(blank=True)
     book_likes = models.IntegerField(default=0)
-    book_author = models.ManyToManyField(Author, through='BookAuthor', verbose_name='Авторы книги', null=True)
-    book_md5 = models.CharField(max_length=32)
+    book_author = models.ManyToManyField(Author, through='BookAuthor', verbose_name='Авторы книги', null=True,
+                                         blank=True)
+    book_md5 = models.CharField(max_length=32, editable=True)
     book_genre = models.ForeignKey(BookGenre,blank=True,null=True)
     book_file_name = models.CharField(max_length=256,null=True,blank=True)
 
 
-class BookAuthor(models.Model):
-    book = models.ForeignKey(Author)
-    author = models.ForeignKey(Book)
+class BookAuthor(models.Model):  # Неебический долбаеб бля.
+    book = models.ForeignKey(Book)
+    author = models.ForeignKey(Author)
 
 
 

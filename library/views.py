@@ -18,50 +18,43 @@ def book_import(request):
     if node().upper() == "LENOVO":
         path = "/home/nikitos/Downloads/S.T.A.L.K.E.R__[rutracker.org]/"
     else:
-        path = "c:\\Downloads\\S.T.A.L.K.E.R__[rutracker.org]\\fb2\\"
+        path = "c:\\Downloads\\S.T.A.L.K.E.R__[rutracker.org]\\fb2+++\\"
     files = find_files_by_mask(path, ".fb2")
 
     a = []
-    for book in parse_files(files):
-        if 'title' in book.keys():
-            title = book['title']
-        if 'md5' in book.keys():
-            md5 = book['md5']
-        if 'Annotation' in book.keys():
-            annotation = book['Annotation']
+    for file in parse_files(files):
 
+        if 'filename' in file.keys():
+            filename = file['filename']
 
-        if 'Genre' in book.keys():
-            genre = BookGenre.objects.get(pk=book['Genre'][0])
+        if 'title' in file.keys():
+            title = file['title']
+        if 'md5' in file.keys():
+            md5 = file['md5']
+        if 'Annotation' in file.keys():
+            annotation = file['Annotation']
 
-        Book(book_name=title,
+        if 'Genre' in file.keys():
+            genre = BookGenre.objects.filter(pk=file['Genre'][0])
+            if genre:
+                genre = genre[0]
+            else:
+                genre = BookGenre.objects.get(pk='no_genre')
+
+        book = Book.objects.create(book_name=title,
+                                   book_file_name=filename,
              book_md5=md5,
              book_annotation=annotation,
-             book_genre=genre).save()
+             book_genre=genre)
+        book.save()
+        print(book)
 
-        Book.book_author.add(Author.objects.get_or_create(firstname=firstname, lastname=lastname))
-
-
-        if 'Authors' in book.keys():
-            for author in book['Authors']:
-                firstname = author['author_first_name']
-                lastname = author['author_last_name']
-                # BookAuthor = Author.objects.filter(firstname=firstname, lastname=lastname)
-                #
-                # if not BookAuthor:
-                #     BookAuthor = Author(firstname=firstname, lastname=lastname).save()
-
-
-                # BA=Author.objects.get_or_create(firstname=firstname, lastname=lastname)
-                # if Book:
-                #     if Author:
-                    # Book.book_author.add(Author.objects.get_or_create(firstname=firstname, lastname=lastname))
-
-                        # ba=BookAuthor(author=Author.objects.get_or_create(firstname=firstname, lastname=lastname),book=Book)
-                        # ba.save()
-
-                    # Book.save()
-                #     print(BookAuthor)
+        if 'Authors' in file.keys():
+            for AAauthor in file['Authors']:
+                author = Author.objects.get_or_create(firstname=AAauthor['author_first_name'],
+                                                      lastname=AAauthor['author_last_name'])
+                # print(author[0])
+                book.book_author.through.objects.create(author=author[0], book=book)
 
 
     return render_to_response("library/import.html", {'import_data': a})
@@ -132,3 +125,23 @@ def downloadgenres(request):
     return response
 
 
+@login_required
+def testlink(request):
+    book = Book.objects.get(book_md5='BE3B3E2B29A2C0DEEAB923336A763CE4')
+    author = Author.objects.get(firstname='Владимир', lastname='Величко')
+    print(book)
+    book.book_author.through.objects.create(author=author, book=book[0])
+
+    # print(author)
+    # book.book_author.add(author)
+    # book.save()
+
+    # BookAuthor.objects.create(book=book,author=author)
+    # print(BookAuthor)
+    # BookAuthor.save()
+    print(book)
+    print(author)
+
+
+
+    # Book.objects.create_book("Pride and Prejudice")
