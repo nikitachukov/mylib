@@ -18,7 +18,7 @@ def book_import(request):
     if node().upper() == "LENOVO":
         path = "/home/nikitos/Downloads/S.T.A.L.K.E.R__[rutracker.org]/"
     else:
-        path = "c:\\Downloads\\S.T.A.L.K.E.R__[rutracker.org]\\fb2+++\\"
+        path = "c:\\Downloads\\S.T.A.L.K.E.R__[rutracker.org]\\fb2\\"
     files = find_files_by_mask(path, ".fb2")
 
     a = []
@@ -34,6 +34,11 @@ def book_import(request):
         if 'Annotation' in file.keys():
             annotation = file['Annotation']
 
+        if 'cover_file_name' in file.keys():
+            cover_file_name = file['cover_file_name']
+        else:
+            cover_file_name = None
+
         if 'Genre' in file.keys():
             genre = BookGenre.objects.filter(pk=file['Genre'][0])
             if genre:
@@ -42,10 +47,11 @@ def book_import(request):
                 genre = BookGenre.objects.get(pk='no_genre')
 
         book = Book.objects.create(book_name=title,
-                                   book_file_name=filename,
+                                   book_file_name_original=filename,
              book_md5=md5,
              book_annotation=annotation,
-             book_genre=genre)
+             book_genre=genre,
+             cover_file_name=cover_file_name)
         book.save()
         print(book)
 

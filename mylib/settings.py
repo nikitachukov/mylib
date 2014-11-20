@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 import keyring
 from platform import node
+from django.conf import settings
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -75,7 +76,7 @@ if node().upper() == "LENOVO":
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_PORT = 587
     EMAIL_HOST_USER = 'nikitachukov@gmail.com'
-    EMAIL_HOST_PASSWORD = keyring.get_password("GMAIL_PASSWORD", EMAIL_HOST_USER )
+    EMAIL_HOST_PASSWORD = keyring.get_password("GMAIL_PASSWORD", EMAIL_HOST_USER)
     DEFAULT_FROM_EMAIL = 'nikitachukov@gmail.com'
     DEFAULT_TO_EMAIL = 'nikitachukov@gmail.com'
 # else:
@@ -113,3 +114,5 @@ TEMPLATE_DIRS = (
 
 LOGIN_OUT = '/auth/logout/',
 LOGIN_URL = '/auth/login/'
+
+MEDIA_ROOT = 'media'

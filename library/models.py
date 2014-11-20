@@ -53,7 +53,8 @@ class Book(models.Model):
                                          blank=True)
     book_md5 = models.CharField(max_length=32, editable=True)
     book_genre = models.ForeignKey(BookGenre,blank=True,null=True)
-    book_file_name = models.CharField(max_length=256,null=True,blank=True)
+    book_file_name_original = models.CharField(max_length=256, null=True, blank=True)
+    cover_file_name = models.CharField(max_length=256, null=True, blank=True)
 
 
 class BookAuthor(models.Model):  # Неебический долбаеб бля.

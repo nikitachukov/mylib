@@ -4,6 +4,7 @@ import os
 import hashlib
 from lxml import etree
 import base64
+from django.conf import settings
 
 __author__ = 'ChukovNA'
 
@@ -61,9 +62,17 @@ def parse_files(files):
                             binary = book.getroot().find(ns + "binary")
                             if (binary.attrib['id'] ==
                                     child.attrib.get('{http://www.w3.org/1999/xlink}href')[1:]):
-                                with open(binary.attrib['id'], 'wb') as f:
+
+                                covers_store_path = os.path.join(settings.MEDIA_ROOT, 'covers')
+
+                                if not os.path.exists(covers_store_path):
+                                    os.makedirs(covers_store_path)
+                                with open(os.path.join(covers_store_path,
+                                                       file[1] + os.path.splitext(binary.attrib['id'])[1]), 'wb') as f:
                                     f.write(base64.b64decode(binary.text))
                                     f.close()
+                                    Book['cover_file_name'] = os.path.join(covers_store_path, file[1] +
+                                                                           os.path.splitext(binary.attrib['id'])[1])
 
                 for author in description.findall(ns + "author"):
                     Author = {}
