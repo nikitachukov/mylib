@@ -11,6 +11,22 @@ from platform import node
 import os
 import uuid
 from django.core.context_processors import csrf
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+
+@login_required
+def BookList(request):
+    book_list = Book.objects.all()
+    paginator = Paginator(book_list, 10)  # Show 25 contacts per page
+    page = request.GET.get('page')
+    try:
+        books = paginator.page(page)
+    except PageNotAnInteger:
+        books = paginator.page(1)
+    except EmptyPage:
+        books = paginator.page(paginator.num_pages)
+    return render_to_response("library/books.html", {'books': books})
+
 
 
 @login_required
@@ -36,8 +52,11 @@ def book_import(request):
 
         if 'cover_file_name' in file.keys():
             cover_file_name = file['cover_file_name']
+            cover_image = os.path.basename(file['cover_file_name'])
+            print(cover_image)
         else:
             cover_file_name = None
+            cover_image = None
 
         if 'Genre' in file.keys():
             genre = BookGenre.objects.filter(pk=file['Genre'][0])
@@ -51,7 +70,10 @@ def book_import(request):
              book_md5=md5,
              book_annotation=annotation,
              book_genre=genre,
-             cover_file_name=cover_file_name)
+             cover_file_name=cover_file_name,
+             cover_image=cover_image)
+
+
         book.save()
         print(book)
 

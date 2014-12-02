@@ -115,4 +115,4 @@ TEMPLATE_DIRS = (
 LOGIN_OUT = '/auth/logout/',
 LOGIN_URL = '/auth/login/'
 
-MEDIA_ROOT = 'media'
+MEDIA_ROOT = 'media/'

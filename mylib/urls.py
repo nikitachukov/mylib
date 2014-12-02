@@ -2,6 +2,7 @@
 from django.conf.urls import patterns, include, url
 from django.http import HttpResponseRedirect
 from django.contrib import admin
+from django.conf import settings
 
 admin.autodiscover()
 
@@ -16,6 +17,10 @@ urlpatterns = patterns('',
 
                        url(r'^$', lambda x: HttpResponseRedirect('/library/index')),
                        url(r'^ckeditor/', include('ckeditor.urls')),
+                       url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
+                           {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+
+
 
 
 )

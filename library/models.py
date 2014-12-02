@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from ckeditor.fields import RichTextField
-from django.core.urlresolvers import reverse
-from django.views import generic
+# from django.core.urlresolvers import reverse
+# from django.views import generic
 
 
 class Post(models.Model):
@@ -16,7 +16,7 @@ class Author(models.Model):
         verbose_name_plural = 'Авторы'
 
     def __str__(self):
-        return self.firstname + ' ' + self.lastname
+        return self.lastname + ' ' + self.firstname
 
     firstname = models.CharField(max_length=100)
     lastname = models.CharField(max_length=100, blank=True)
@@ -55,6 +55,7 @@ class Book(models.Model):
     book_genre = models.ForeignKey(BookGenre,blank=True,null=True)
     book_file_name_original = models.CharField(max_length=256, null=True, blank=True)
     cover_file_name = models.CharField(max_length=256, null=True, blank=True)
+    cover_image = models.ImageField(upload_to='covers', null=True, blank=True)
 
 
 class BookAuthor(models.Model):  # Неебический долбаеб бля.
