@@ -9,7 +9,7 @@ urlpatterns = patterns('',
                        url(r'^books/$', views.BookList, name='books'),
                        url(r'^import/$', views.book_import, name='book_import'),
                        url(r'^delete/$', views.delete, name='book_delte'),
-
+                       url(r'^list/$', views.BookList, name='book_list'),
                        url(r'^search/$', views.author_search, name='author_search'),
                        url(r'^osinfo/$', views.osinfo, name='osinfo'),
                        url(r'^index/$', views.index, name='index'),
