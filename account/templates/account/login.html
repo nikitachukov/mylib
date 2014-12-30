@@ -10,7 +10,6 @@
     <link href={% static "css/signin.css" %} rel="stylesheet">
 
 
-
 </head>
 <body>
 
@@ -26,11 +25,11 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
 
         {% if login_error %}
-            <div class="alert alert-danger" role="alert">
-                <p class="text-center">{{ login_error }}</p>
+        <div class="alert alert-danger" role="alert">
+            <p class="text-center">{{ login_error }}</p>
 
-                <p class="text-center"><a href="/auth/resetpassword">Сбросить пароль</a></p>
-            </div>
+            <p class="text-center"><a href="/auth/resetpassword">Сбросить пароль</a></p>
+        </div>
         {% endif %}
 
 

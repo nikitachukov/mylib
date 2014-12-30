@@ -17,5 +17,5 @@ urlpatterns = patterns('',
                        url(r'^testlink/$', views.testlink, name='testlink'),
                        url(r'^testemail/$', views.testemail, name='testemail'),
                        url(r'^downloadgenres/$', views.downloadgenres, name='downloadgenres'),
-                       url(r'^ck/$', views.testck, name='testck'),
+                       url(r'^fbview/$', views.fbview, name='fbview'),
 )
