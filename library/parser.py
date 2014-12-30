@@ -86,7 +86,7 @@ def main():
     import platform
 
     if platform.node().upper() == "LENOVO":
-        path = "/home/nikitos/Downloads/S.T.A.L.K.E.R__[rutracker.org]/fb2/"
+        path = "/home/nikitos/Downloads/S.T.A.L.K.E.R__[rutracker.org]/"
     else:
         path = "c:\\Downloads\\S.T.A.L.K.E.R__[rutracker.org]"
 

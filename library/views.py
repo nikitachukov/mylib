@@ -23,46 +23,26 @@ def book_import(request):
 
     a = []
     for book in parse_files(files):
-        if 'title' in book.keys():
-            title = book['title']
-        if 'md5' in book.keys():
-            md5 = book['md5']
-        if 'Annotation' in book.keys():
-            annotation = book['Annotation']
-
-
-        if 'Genre' in book.keys():
-            genre = BookGenre.objects.get(pk=book['Genre'][0])
-
-        Book(book_name=title,
-             book_md5=md5,
-             book_annotation=annotation,
-             book_genre=genre).save()
-
-        Book.book_author.add(Author.objects.get_or_create(firstname=firstname, lastname=lastname))
-
-
         if 'Authors' in book.keys():
             for author in book['Authors']:
-                firstname = author['author_first_name']
-                lastname = author['author_last_name']
-                # BookAuthor = Author.objects.filter(firstname=firstname, lastname=lastname)
-                #
-                # if not BookAuthor:
-                #     BookAuthor = Author(firstname=firstname, lastname=lastname).save()
+                if not (
+                Author.objects.filter(firstname=author['author_first_name'], lastname=author['author_last_name'])):
+                    Author(lastname=author['author_last_name'], firstname=author['author_first_name']).save()
+                    a += [author]
+
+                    # print(book['Genre'][0])
 
 
-                # BA=Author.objects.get_or_create(firstname=firstname, lastname=lastname)
-                # if Book:
-                #     if Author:
-                    # Book.book_author.add(Author.objects.get_or_create(firstname=firstname, lastname=lastname))
 
-                        # ba=BookAuthor(author=Author.objects.get_or_create(firstname=firstname, lastname=lastname),book=Book)
-                        # ba.save()
+                    Book(book_name=book['title'],
+                         book_md5=book['md5'],
+                         # book_annotation=book['Annotation'],
 
-                    # Book.save()
-                #     print(BookAuthor)
+                         book_genre=BookGenre.objects.get(pk=book['Genre'][0])).save()
+                # # print()
 
+                print(book['Genre'][0])
+                print(BookGenre.objects.get(pk=book['Genre'][0]))
 
     return render_to_response("library/import.html", {'import_data': a})
 
@@ -92,7 +72,6 @@ def createuser(request):
 def delete(request):
     try:
         Author.objects.all().delete()
-        Book.objects.all().delete()
         return render_to_response("library/result_message.html")
     except Exception as E:
         return render_to_response("library/result_message.html", {'error_message': {'error_message': str(E)}})
