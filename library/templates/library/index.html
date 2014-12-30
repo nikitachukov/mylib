@@ -12,14 +12,15 @@
 {% else %}
     <p>Welcome, new user. Please log in.</p>
 {% endif %}
-
 <li><a href="{% static "cat.jpg" %}">cat (global static)</a></li>
 <li><a href="{% static "dog.jpg" %}">dog (app static)</a></li>
 <li><a href="{% url 'admin:index' %}">admin</a></li>
+<li><a href="{% url 'library:book_list' %}">book list</a></li>
 <li><a href="{% url 'library:osinfo' %}">osinfo</a></li>
 <li><a href="{% url 'library:book_import' %}">book import</a></li>
 <li><a href="{% url 'library:book_delte' %}">book delete</a></li>
 <li><a href="{% url 'library:createuser' %}">createuser</a></li>
+<li><a href="{% url 'library:testlink' %}">testlink</a></li>
 <li><a href="{% url 'library:testemail' %}">testemail</a></li>
 <li><a href="{% url 'library:downloadgenres' %}">download genres</a></li>
 <li><a href="{% url 'account:login' %}">login</a></li>

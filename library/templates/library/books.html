@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    {% load staticfiles %}
+    <link href={% static "css/bootstrap.min.css" %} rel="stylesheet">
+    <!--<link href={% static "css/bootstrap-table.css" %} rel="stylesheet">-->
+    <link href={% static "js/bootstrap.min.js" %} rel="script">
+    <!--<link href={% static "js/jquery.min.js" %} rel="script">-->
+    <!--<link href={% static "js/bootstrap-table.js" %} rel="script">-->
+    <!--<link href={% static "js/bootstrap-table-ru-RU.min.js" %} rel="script">-->
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css">
+
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
+
+<script>
+    $(document).ready( function () {
+
+    $('#ex1').DataTable();
+
+
+            $('#ex2').dataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "http://127.0.0.1:8000/library/fbview/",
+
+            "dataType": "jsonp"
+        }
+    } );
+
+
+} );
+
+    </script>
+
+
+
+</head>
+<body>
+
+<table class="table table-hover">
+  <thead>
+  <th>Книга</th>
+  <th>№</th></thead>
+<tbody>
+    {% for book in books %}
+    <tr>
+        <td><a href="#">{{ books.page.start_index }}</a></td>
+
+        <td>{{ book }}</td>
+    </tr>
+    </tbody>
+    {% endfor %}
+</table>
+<div class="bootstrap-table">
+<table data-toggle="table" data-url="/library/fbview/" data-cache="false" data-height="299">
+    <thead>
+        <tr>
+            <th data-field="id">Item ID</th>
+            <th data-field="name">Item Name</th>
+            <th data-field="price">Item Price</th>
+        </tr>
+    </thead>
+</table>
+    </div>
+<ul class="pagination pagination-centered">
+        {% if books.has_previous %}
+            <li><a href="?page=1"><span class="glyphicon glyphicon-fast-backward"></span></a></li>
+            <li> <a href="?page={{books.previous_page_number}}" aria-label="Previous"> <span aria-hidden="Previous">{{books.previous_page_number}}</span></a></li>
+        {%endif%}
+        <li class="disabled"><a href="#"><b>{{ books.number }}</b></a></li>
+        {% if books.has_next %}
+            <li> <a href="?page={{books.next_page_number}}" aria-label="Next"><span aria-hidden="true">{{books.next_page_number}}</span></a></li>
+            <li><a href="?page={{books.paginator.num_pages}}"><span class="glyphicon glyphicon-fast-forward"></span></a></li>
+        {% endif %}
+</ul>
+
+
+
+
+
+
+<table id="ex1" class="display">
+    <thead>
+        <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Row 1 Data 1</td>
+            <td>Row 1 Data 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Data 1</td>
+            <td>Row 2 Data 2</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<table id="ex2" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+
+        <tfoot>
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </tfoot>
+    </table>
+
+
+</body>
+</html>
