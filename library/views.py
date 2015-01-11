@@ -11,6 +11,122 @@ from platform import node
 import os
 import uuid
 from django.core.context_processors import csrf
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from pprint import pprint
+import json
+from django.http import HttpResponse
+
+def fbview(request):
+
+
+    data = {
+  "draw": 1,
+  "recordsTotal": 57,
+  "recordsFiltered": 57,
+  "data": [
+    [
+      "Airi",
+      "Satou",
+      "Accountant",
+      "Tokyo",
+      "28th Nov 08",
+      "$162,700"
+    ],
+    [
+      "Angelica",
+      "Ramos",
+      "Chief Executive Officer (CEO)",
+      "London",
+      "9th Oct 09",
+      "$1,200,000"
+    ],
+    [
+      "Ashton",
+      "Cox",
+      "Junior Technical Author",
+      "San Francisco",
+      "12th Jan 09",
+      "$86,000"
+    ],
+    [
+      "Bradley",
+      "Greer",
+      "Software Engineer",
+      "London",
+      "13th Oct 12",
+      "$132,000"
+    ],
+    [
+      "Brenden",
+      "Wagner",
+      "Software Engineer",
+      "San Francisco",
+      "7th Jun 11",
+      "$206,850"
+    ],
+    [
+      "Brielle",
+      "Williamson",
+      "Integration Specialist",
+      "New York",
+      "2nd Dec 12",
+      "$372,000"
+    ],
+    [
+      "Bruno",
+      "Nash",
+      "Software Engineer",
+      "London",
+      "3rd May 11",
+      "$163,500"
+    ],
+    [
+      "Caesar",
+      "Vance",
+      "Pre-Sales Support",
+      "New York",
+      "12th Dec 11",
+      "$106,450"
+    ],
+    [
+      "Cara",
+      "Stevens",
+      "Sales Assistant",
+      "New York",
+      "6th Dec 11",
+      "$145,600"
+    ],
+    [
+      "Cedric",
+      "Kelly",
+      "Senior Javascript Developer",
+      "Edinburgh",
+      "29th Mar 12",
+      "$433,060"
+    ]
+  ]
+}
+
+
+
+
+    return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+
+@login_required
+def BookList(request):
+    book_list = Book.objects.all()
+    paginator = Paginator(book_list, 10)  # Show 25 contacts per page
+    page = request.GET.get('page')
+    try:
+        books = paginator.page(page)
+    except PageNotAnInteger:
+        books = paginator.page(1)
+    except EmptyPage:
+        books = paginator.page(paginator.num_pages)
+    return render_to_response("library/books.html", {'books': books})
+
 
 
 @login_required
@@ -22,27 +138,52 @@ def book_import(request):
     files = find_files_by_mask(path, ".fb2")
 
     a = []
-    for book in parse_files(files):
-        if 'Authors' in book.keys():
-            for author in book['Authors']:
-                if not (
-                Author.objects.filter(firstname=author['author_first_name'], lastname=author['author_last_name'])):
-                    Author(lastname=author['author_last_name'], firstname=author['author_first_name']).save()
-                    a += [author]
+    for file in parse_files(files):
 
-                    # print(book['Genre'][0])
+        if 'filename' in file.keys():
+            filename = file['filename']
+
+        if 'title' in file.keys():
+            title = file['title']
+        if 'md5' in file.keys():
+            md5 = file['md5']
+        if 'Annotation' in file.keys():
+            annotation = file['Annotation']
+
+        if 'cover_file_name' in file.keys():
+            cover_file_name = file['cover_file_name']
+            cover_image = os.path.basename(file['cover_file_name'])
+            print(cover_image)
+        else:
+            cover_file_name = None
+            cover_image = None
+
+        if 'Genre' in file.keys():
+            genre = BookGenre.objects.filter(pk=file['Genre'][0])
+            if genre:
+                genre = genre[0]
+            else:
+                genre = BookGenre.objects.get(pk='no_genre')
+
+        book = Book.objects.create(book_name=title,
+                                   book_file_name_original=filename,
+             book_md5=md5,
+             book_annotation=annotation,
+             book_genre=genre,
+             cover_file_name=cover_file_name,
+             cover_image=cover_image)
 
 
+        book.save()
+        print(book)
 
-                    Book(book_name=book['title'],
-                         book_md5=book['md5'],
-                         # book_annotation=book['Annotation'],
+        if 'Authors' in file.keys():
+            for AAauthor in file['Authors']:
+                author = Author.objects.get_or_create(firstname=AAauthor['author_first_name'],
+                                                      lastname=AAauthor['author_last_name'])
+                # print(author[0])
+                book.book_author.through.objects.create(author=author[0], book=book)
 
-                         book_genre=BookGenre.objects.get(pk=book['Genre'][0])).save()
-                # # print()
-
-                print(book['Genre'][0])
-                print(BookGenre.objects.get(pk=book['Genre'][0]))
 
     return render_to_response("library/import.html", {'import_data': a})
 
@@ -72,6 +213,7 @@ def createuser(request):
 def delete(request):
     try:
         Author.objects.all().delete()
+        Book.objects.all().delete()
         return render_to_response("library/result_message.html")
     except Exception as E:
         return render_to_response("library/result_message.html", {'error_message': {'error_message': str(E)}})
@@ -111,3 +253,46 @@ def downloadgenres(request):
     return response
 
 
+@login_required
+def testlink(request):
+    book = Book.objects.get(book_md5='BE3B3E2B29A2C0DEEAB923336A763CE4')
+    author = Author.objects.get(firstname='Владимир', lastname='Величко')
+    print(book)
+    book.book_author.through.objects.create(author=author, book=book[0])
+
+    # print(author)
+    # book.book_author.add(author)
+    # book.save()
+
+    # BookAuthor.objects.create(book=book,author=author)
+    # print(BookAuthor)
+    # BookAuthor.save()
+    print(book)
+    print(author)
+
+
+
+    # Book.objects.create_book("Pride and Prejudice")
+
+@login_required
+def iphone_location(request):
+    from django.conf import settings
+    print(settings.ICLOUD_USER)
+    print(settings.ICLOUD_PASSWORD)
+
+
+    from pyicloud import PyiCloudService
+    api = PyiCloudService(settings.ICLOUD_USER, settings.ICLOUD_PASSWORD)
+    for index, item in enumerate(api.devices):
+        if item.status()['name']=='Iphone_nikitos':
+            location=item.location()
+
+            pprint(location)
+
+            return render_to_response("library/map.html",
+                              {'location':
+                                   {'latitude': str(location['latitude']),
+                                    'longitude': str(location['longitude']),
+                                    'horizontalAccuracy':str(location['horizontalAccuracy'])
+
+                                    }})

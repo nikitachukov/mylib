@@ -78,6 +78,9 @@ if node().upper() == "LENOVO":
     EMAIL_HOST_PASSWORD = keyring.get_password("GMAIL_PASSWORD", EMAIL_HOST_USER)
     DEFAULT_FROM_EMAIL = 'nikitachukov@gmail.com'
     DEFAULT_TO_EMAIL = 'nikitachukov@gmail.com'
+    ICLOUD_USER = 'nikitachukov@me.com'
+    ICLOUD_PASSWORD = keyring.get_password("ICLOUD", ICLOUD_USER)
+
 # else:
 elif node().upper() == "MSK02AL-D203LL":
     # print(keyring.set_keyring())

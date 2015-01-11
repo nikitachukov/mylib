@@ -18,4 +18,5 @@ urlpatterns = patterns('',
                        url(r'^testemail/$', views.testemail, name='testemail'),
                        url(r'^downloadgenres/$', views.downloadgenres, name='downloadgenres'),
                        url(r'^fbview/$', views.fbview, name='fbview'),
+                       url(r'^map/$', views.iphone_location, name='iphone_location'),
 )

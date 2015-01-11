@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Быстрый старт. Размещение интерактивной карты на странице</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script type="text/javascript">
+        ymaps.ready(init);
+        var myMap, 
+            myPlacemark;
+
+        function init(){ 
+            myMap = new ymaps.Map("map", {
+                center: [{{ location.latitude}},{{ location.longitude }}],
+                zoom: 12
+            }); 
+            
+            myPlacemark = new ymaps.Placemark([{{ location.latitude }}, {{ location.longitude}}], {
+                hintContent: 'Москва!',
+                balloonContent: 'Столица России'
+            });
+
+
+
+            myMap.geoObjects.add(myPlacemark);
+
+
+            var myCircle = new ymaps.Circle([[{{ location.latitude }}, {{ location.longitude}}], {{ location.horizontalAccuracy }}]);
+            myMap.geoObjects.add(myCircle);
+
+        }
+    </script>
+</head>
+
+<body>
+
+   <li>{{ location.latitude }}</li>
+   <li>{{ location.longitude }}</li>
+
+    <div id="map" style="width: 1024px; height: 768px"></div>
+</body>
+
+</html>
