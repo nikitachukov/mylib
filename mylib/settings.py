@@ -40,7 +40,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ckeditor',
     'library',
     'polls',
     'account',
@@ -116,11 +115,3 @@ TEMPLATE_DIRS = (
 
 LOGIN_OUT = '/auth/logout/',
 LOGIN_URL = '/auth/login/'
-
-CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
-CKEDITOR_CONFIGS = {
-    'awesome_ckeditor': {
-        'toolbar': 'Basic',
-    },
-}
