@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'library',
     'polls',
     'account',
+    'trains',
 )
 
 MIDDLEWARE_CLASSES = (
