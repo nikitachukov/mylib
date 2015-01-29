@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from ckeditor.fields import RichTextField
 from django.core.urlresolvers import reverse
 from django.views import generic
-
-
-class Post(models.Model):
-    content = RichTextField()
 
 
 class Author(models.Model):

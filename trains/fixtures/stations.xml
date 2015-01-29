@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+    <object model="trains.Stations" pk="s2000003">
+        <field name="name" type="CharField">Москва (Казанский+вокзал)</field>
+        <field name="order" type="IntegerField">0</field>
+    </object>
+    <object model="trains.Stations" pk="s9601647">
+        <field name="name" type="CharField">Электрозаводская</field>
+        <field name="order" type="IntegerField">1</field>
+    </object>
+    <object model="trains.Stations" pk="s9601642">
+        <field name="name" type="CharField">Новая</field>
+        <field name="order" type="IntegerField">8</field>
+    </object>
+    <object model="trains.Stations" pk="s9601627">
+        <field name="name" type="CharField">Выхино</field>
+        <field name="order" type="IntegerField">9</field>
+    </object>
+    <object model="trains.Stations" pk="s9601636">
+        <field name="name" type="CharField">Люберцы</field>
+        <field name="order" type="IntegerField">11</field>
+    </object>
+    <object model="trains.Stations" pk="s9601758">
+        <field name="name" type="CharField">Малаховка</field>
+        <field name="order" type="IntegerField">15</field>
+    </object>
+    <object model="trains.Stations" pk="s2000003">
+        <field name="name" type="CharField">Отдых</field>
+        <field name="order" type="IntegerField">19</field>
+    </object>
+</django-objects>

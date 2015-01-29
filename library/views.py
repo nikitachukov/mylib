@@ -4,7 +4,6 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.core.servers.basehttp import FileWrapper
-from django.http import HttpResponse
 from library.models import *
 from library.parser import *
 from platform import node
