@@ -80,6 +80,10 @@ if node().upper() == "LENOVO":
     DEFAULT_TO_EMAIL = 'nikitachukov@gmail.com'
     ICLOUD_USER = 'nikitachukov@me.com'
     ICLOUD_PASSWORD = keyring.get_password("ICLOUD", ICLOUD_USER)
+    YANDEX_API_KEY=keyring.get_password('yandex','apikey')
+
+
+
 
 # else:
 elif node().upper() == "MSK02AL-D203LL":
