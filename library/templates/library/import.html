@@ -7,6 +7,12 @@
 <body>
 import function
 
+{% if time %}
+<p> <b>{{ time }} c.</b></p>
+
+
+{% endif %}
+
 {% if import_data %}
     <ul>
         {% for autors in import_data %}

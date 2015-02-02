@@ -6,6 +6,7 @@ from django.core import serializers
 from django.core.servers.basehttp import FileWrapper
 from library.models import *
 from library.parser import *
+from time import time,sleep
 from platform import node
 import os
 import uuid
@@ -34,22 +35,19 @@ def BookList(request):
 
 @login_required
 def book_import(request):
+
+    start=time()
+
     Books=[]
     Doubles=[]
     Errors=[]
 
-    # if node().upper() == "LENOVO":
-    #     path = "/home/nikitos/Downloads/S.T.A.L.K.E.R__[rutracker.org]/"
-    # else:
-    #     path = "c:\\Downloads\\S.T.A.L.K.E.R__[rutracker.org]\\fb2\\"
-
-    print()
 
     files = find_files_by_mask(settings.BOOKS_LOCATION, ".fb2")
 
     a = []
 
-    Books,Doubles,Errors=parse_files(files[:10])
+    Books,Doubles,Errors=parse_files(files)
     for file in Books:
 
         if 'filename' in file.keys():
@@ -100,7 +98,7 @@ def book_import(request):
                 book.book_author.through.objects.create(author=author, book=book)
     #
 
-    return render_to_response("library/import.html", {'import_data': a})
+    return render_to_response("library/import.html", {'import_data': a, 'time': time()-start})
 
 
 def author_search(request):
