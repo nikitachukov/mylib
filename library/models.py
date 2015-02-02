@@ -30,7 +30,7 @@ class BookGenre(models.Model):
 
 class Book(models.Model):
     class Meta():
-        db_table = 'books'
+        db_table = 'library_books'
         verbose_name = 'Книга'
         verbose_name_plural = 'Книги'
 

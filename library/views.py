@@ -11,7 +11,9 @@ import os
 import uuid
 from django.core.context_processors import csrf
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import django
 from pprint import pprint
+import platform
 import json
 from django.http import HttpResponse
 
@@ -41,8 +43,9 @@ def book_import(request):
     # else:
     #     path = "c:\\Downloads\\S.T.A.L.K.E.R__[rutracker.org]\\fb2\\"
 
+    print()
 
-    files = find_files_by_mask('/home/nikitos/books/', ".fb2")
+    files = find_files_by_mask(settings.BOOKS_LOCATION, ".fb2")
 
     a = []
 
@@ -105,11 +108,12 @@ def author_search(request):
 
 @login_required
 def osinfo(request):
-    return render_to_response("library/osinfo.html", {'osinfo': {'sysname': os.uname()[0],
-                                                                 'nodename': os.uname()[1],
-                                                                 'release': os.uname()[2],
-                                                                 'version': os.uname()[3],
-                                                                 'machine': os.uname()[4]}})
+        return render_to_response("library/osinfo.html", {'osinfo': {
+                                                                 'nodename': platform.node(),
+                                                                 'version': platform.python_implementation()+platform.python_version(),
+                                                                 'arch':platform.system()+' '+platform.version()+' '+platform.architecture()[0],
+                                                                 'processor':platform.processor(),
+                                                                 'django':'Django '+django.get_version()}})
 
 
 def createuser(request):

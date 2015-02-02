@@ -4,7 +4,7 @@ from django.db import models
 
 class Stations(models.Model):
     class Meta():
-        db_table = 'stations'
+        db_table = 'trains_stations'
         verbose_name = 'Станция'
         verbose_name_plural = 'Станции'
 

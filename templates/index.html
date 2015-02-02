@@ -12,38 +12,28 @@
 {% else %}
     <p>Welcome, new user. Please log in.</p>
 {% endif %}
-<p><b>Static tests</b>
-<li><a href="{% static "cat.jpg" %}">cat (global static)</a></li>
-<li><a href="{% static "dog.jpg" %}">dog (app static)</a></li>
-</p>
-<p>
+<b>Static tests</b>
+<li><a href="{% static 'cat.jpg' %}">cat (global static)</a></li>
+<li><a href="{% static 'dog.jpg' %}">dog (app static)</a></li>
 
-<p><b>General</b>
+<b>General</b>
 <li><a href="{% url 'admin:index' %}">admin</a></li>
 <li><a href="{% url 'library:osinfo' %}">osinfo</a></li>
 <li><a href="{% url 'library:createuser' %}">createuser</a></li>
 <li><a href="{% url 'library:testemail' %}">testemail</a></li>
 <li><a href="{% url 'library:iphone_location' %}">iphone location</a></li>
-</p>
-
-<p><b>Blog</b>
+<b>Blog</b>
 <li><a href="{% url 'articles:articles' %}">blog</a></li>
-</p>
-
-<p><b>Library</b>
+<b>Library</b>
 <li><a href="{% url 'library:book_list' %}">book list</a></li>
 <li><a href="{% url 'library:book_import' %}">book import</a></li>
 <li><a href="{% url 'library:book_delte' %}">book delete</a></li>
 <li><a href="{% url 'library:downloadgenres' %}">download genres</a></li>
-</p>
-<p><b>Auth</b>
+<b>Auth</b>
 <li><a href="{% url 'account:login' %}">login</a></li>
 <li><a href="{% url 'account:logout' %}">logout</a></li>
-</p>
-<p><b>Trains\ajax</b>
+<b>Trains\ajax</b>
 <li><a href="{% url 'trains:stations_list_ajax' %}">ajax json</a></li>
 <li><a href="{% url 'trains:stations_list_ajax_my' %}">ajax json jq</a></li>
-</p>
-
 </body>
 </html>

@@ -5,15 +5,12 @@
     <title></title>
 </head>
 <body>
-<H1>osinfo method</H1>
+<H1>Environment</H1>
 {% if osinfo %}
-    <ul>
-    <li>{{ osinfo.sysname }}</li>
-    <li>{{ osinfo.release }}</li>
-    <li>{{ osinfo.version }}</li>
-    <li>{{ osinfo.machine }}</li>
-    <li>{{ osinfo.nodename }}</li>
-    </li>
+    <li>Nodename:<b>{{ osinfo.nodename }}</b></li>
+    <li>Python:<b>{{ osinfo.version }} {{ osinfo.django }}</b></li>
+    <li>OS:<b>{{ osinfo.arch }}</b></li>
+    <li>CPU:<b>{{ osinfo.processor }}</b></li>
 {% endif %}
 </ul>
 </body>
