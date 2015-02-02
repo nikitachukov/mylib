@@ -9,24 +9,24 @@ from django.contrib import auth
 
 
 def articles(request):
-    return render_to_response('articles.html',
+    return render_to_response('article/articles.html',
                               {'articles': Article.objects.all(), 'username': auth.get_user(request).username})
 
 
 def addlike(request, article_id):
     try:
         if article_id in request.COOKIES:
-            redirect('/')
+            redirect('/articles/')
         else:
             article = Article.objects.get(id=article_id)
             article.article_likes += 1
             article.save()
-            response = redirect('/')
+            response = redirect('/articles/')
             response.set_cookie(article_id, 'test')
             return response
     except ObjectDoesNotExist:
         raise Http404
-    return redirect('/')
+    return redirect('/articles/')
 
 
 def article(request, article_id):
@@ -37,7 +37,7 @@ def article(request, article_id):
     args['comments'] = Comments.objects.filter(comments_article_id=article_id)
     args['form'] = comment_form
     args['username'] = auth.get_user(request).username
-    return render_to_response('article.html', args)
+    return render_to_response('article/article.html', args)
 
 
 def addcomment(request, article_id):

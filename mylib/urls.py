@@ -4,25 +4,18 @@ from django.http import HttpResponseRedirect
 from django.contrib import admin
 from django.conf import settings
 
+
+from mylib import views
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
-                       # Examples:
-
+                       url(r'^$',views.index, name='index'),
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^polls/', include('polls.urls', namespace="polls")),
                        url(r'^library/', include('library.urls', namespace="library")),
-                       url(r'^blog/', include('article.urls', namespace="article")),
+                       url(r'^articles/', include('article.urls', namespace="articles")),
                        url(r'^trains/', include('trains.urls', namespace="trains")),
-
                        url(r'^auth/', include('account.urls', namespace="account")),
-
-                       url(r'^$', lambda x: HttpResponseRedirect('/library/index')),
-
-                       url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
-                           {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
-
-
-
-
+                       url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
 )

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 import keyring
 from mylib.local_settings import *
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 

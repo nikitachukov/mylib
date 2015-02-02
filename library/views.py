@@ -131,9 +131,7 @@ def delete(request):
         return render_to_response("library/result_message.html", {'error_message': {'error_message': str(E)}})
 
 
-@login_required
-def index(request):
-    return render_to_response("library/index.html", {'user': request.user})
+
 
 
 @login_required
