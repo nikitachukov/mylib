@@ -17,4 +17,5 @@ urlpatterns = patterns('',
                        url(r'^testemail/$', views.testemail, name='testemail'),
                        url(r'^downloadgenres/$', views.downloadgenres, name='downloadgenres'),
                        url(r'^map/$', views.iphone_location, name='iphone_location'),
+
 )
