@@ -2,7 +2,7 @@
 .idea
 db.sqlite3
 trains/migrations
-library/migrations
+library/migrations/*
 covers
 db.sqlite3
 mylib/local_settings.py
