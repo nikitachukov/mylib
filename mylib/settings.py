@@ -12,8 +12,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import keyring
-from platform import node
-
+from mylib.local_settings import *
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -21,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '8yh_yrxt5%&#f&*mz9evws*yvrodleu6i(f2-e6i&$5se!3m^^'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
