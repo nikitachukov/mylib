@@ -11,6 +11,10 @@
     {% for book in books %}
         <li>
             {{ book }}
+            {%if book.cover%}
+            <img src=" {{book.cover.url }}" />
+            {% endif %}
+
         </li>
     {% endfor %}
 </ul>

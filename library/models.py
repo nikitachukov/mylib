@@ -45,7 +45,7 @@ class Book(models.Model):
     book_author = models.ManyToManyField(Author, through='BookAuthor', verbose_name='Авторы книги', null=True)
     book_md5 = models.CharField(max_length=32)
     book_genre = models.ForeignKey(BookGenre)
-    cover = models.ImageField(upload_to='covers/', blank=True)
+    cover = models.ImageField( blank=True)
 
 
 class BookAuthor(models.Model):

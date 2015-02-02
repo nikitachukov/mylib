@@ -20,7 +20,7 @@ from django.http import HttpResponse
 @login_required
 def BookList(request):
     book_list = Book.objects.all()
-    paginator = Paginator(book_list, 50)  # Show 25 contacts per page
+    paginator = Paginator(book_list, 10)  # Show 25 contacts per page
     page = request.GET.get('page')
     try:
         books = paginator.page(page)
@@ -64,7 +64,7 @@ def book_import(request):
 
         if 'cover_file_name' in file.keys():
             cover_file_name = file['cover_file_name']
-            cover_image = os.path.basename(file['cover_file_name'])
+            cover_image ='covers/'+os.path.basename(file['cover_file_name'])
             # print(cover_image)
         else:
             cover_file_name = None
