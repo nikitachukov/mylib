@@ -336,4 +336,8 @@
     <object model="library.bookgenre" pk="thriller">
         <field name="genre_name" type="CharField">Триллер</field>
     </object>
+
+    <object model="library.bookgenre" pk="no_genre">
+        <field name="genre_name" type="CharField">Отсутствует</field>
+    </object>
 </django-objects>

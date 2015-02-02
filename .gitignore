@@ -1,3 +1,7 @@
 # Created by .gitignore support plugin (hsz.mobi)
 .idea
 db.sqlite3
+trains/migrations
+library/migrations
+covers
+db.sqlite3

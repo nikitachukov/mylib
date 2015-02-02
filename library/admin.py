@@ -10,10 +10,9 @@ class AuthorInline(admin.TabularInline):
 
 
 class BookAdmin(admin.ModelAdmin):
-    fields = ['book_name', 'book_genre', 'book_annotation', 'book_file_name_original', 'book_md5', 'cover_file_name',
-              'cover_image']
+    fields = ['book_name', 'book_genre', 'book_annotation',  'book_md5','cover']
     ordering = ('book_name',)
-    search_fields = ('book_name', 'book_file_name_original', 'book_md5',)
+    search_fields = ('book_name', 'book_md5',)
     list_filter = ['book_name', 'book_genre', 'book_author']
     inlines = [AuthorInline, ]
 
@@ -26,8 +25,11 @@ class AuthorAdmin(admin.ModelAdmin):
 class BookGenreAdmin(admin.ModelAdmin):
     ordering = ('genre_name',)
     fields = ['genre_code', 'genre_name']
+    search_fields = ('genre_code',)
 
 
 admin.site.register(Book, BookAdmin)
 
 admin.site.register(Author, AuthorAdmin)
+
+admin.site.register(BookGenre, BookGenreAdmin)

@@ -15,108 +15,10 @@ from pprint import pprint
 import json
 from django.http import HttpResponse
 
-def fbview(request):
-
-
-    data = {
-  "draw": 1,
-  "recordsTotal": 57,
-  "recordsFiltered": 57,
-  "data": [
-    [
-      "Airi",
-      "Satou",
-      "Accountant",
-      "Tokyo",
-      "28th Nov 08",
-      "$162,700"
-    ],
-    [
-      "Angelica",
-      "Ramos",
-      "Chief Executive Officer (CEO)",
-      "London",
-      "9th Oct 09",
-      "$1,200,000"
-    ],
-    [
-      "Ashton",
-      "Cox",
-      "Junior Technical Author",
-      "San Francisco",
-      "12th Jan 09",
-      "$86,000"
-    ],
-    [
-      "Bradley",
-      "Greer",
-      "Software Engineer",
-      "London",
-      "13th Oct 12",
-      "$132,000"
-    ],
-    [
-      "Brenden",
-      "Wagner",
-      "Software Engineer",
-      "San Francisco",
-      "7th Jun 11",
-      "$206,850"
-    ],
-    [
-      "Brielle",
-      "Williamson",
-      "Integration Specialist",
-      "New York",
-      "2nd Dec 12",
-      "$372,000"
-    ],
-    [
-      "Bruno",
-      "Nash",
-      "Software Engineer",
-      "London",
-      "3rd May 11",
-      "$163,500"
-    ],
-    [
-      "Caesar",
-      "Vance",
-      "Pre-Sales Support",
-      "New York",
-      "12th Dec 11",
-      "$106,450"
-    ],
-    [
-      "Cara",
-      "Stevens",
-      "Sales Assistant",
-      "New York",
-      "6th Dec 11",
-      "$145,600"
-    ],
-    [
-      "Cedric",
-      "Kelly",
-      "Senior Javascript Developer",
-      "Edinburgh",
-      "29th Mar 12",
-      "$433,060"
-    ]
-  ]
-}
-
-
-
-
-    return HttpResponse(json.dumps(data), content_type='application/json')
-
-
-
 @login_required
 def BookList(request):
     book_list = Book.objects.all()
-    paginator = Paginator(book_list, 10)  # Show 25 contacts per page
+    paginator = Paginator(book_list, 50)  # Show 25 contacts per page
     page = request.GET.get('page')
     try:
         books = paginator.page(page)
@@ -130,14 +32,22 @@ def BookList(request):
 
 @login_required
 def book_import(request):
-    if node().upper() == "LENOVO":
-        path = "/home/nikitos/Downloads/S.T.A.L.K.E.R__[rutracker.org]/"
-    else:
-        path = "c:\\Downloads\\S.T.A.L.K.E.R__[rutracker.org]\\fb2\\"
-    files = find_files_by_mask(path, ".fb2")
+    Books=[]
+    Doubles=[]
+    Errors=[]
+
+    # if node().upper() == "LENOVO":
+    #     path = "/home/nikitos/Downloads/S.T.A.L.K.E.R__[rutracker.org]/"
+    # else:
+    #     path = "c:\\Downloads\\S.T.A.L.K.E.R__[rutracker.org]\\fb2\\"
+
+
+    files = find_files_by_mask('/home/nikitos/books/', ".fb2")
 
     a = []
-    for file in parse_files(files):
+
+    Books,Doubles,Errors=parse_files(files[:10])
+    for file in Books:
 
         if 'filename' in file.keys():
             filename = file['filename']
@@ -152,7 +62,7 @@ def book_import(request):
         if 'cover_file_name' in file.keys():
             cover_file_name = file['cover_file_name']
             cover_image = os.path.basename(file['cover_file_name'])
-            print(cover_image)
+            # print(cover_image)
         else:
             cover_file_name = None
             cover_image = None
@@ -165,24 +75,27 @@ def book_import(request):
                 genre = BookGenre.objects.get(pk='no_genre')
 
         book = Book.objects.create(book_name=title,
-                                   book_file_name_original=filename,
+                                   # book_file_name_original=filename,
              book_md5=md5,
              book_annotation=annotation,
              book_genre=genre,
-             cover_file_name=cover_file_name,
-             cover_image=cover_image)
+             # cover_file_name=cover_file_name,
+             cover=cover_image
+        )
 
+        a.append(book)
 
         book.save()
-        print(book)
+
+
 
         if 'Authors' in file.keys():
             for AAauthor in file['Authors']:
                 author = Author.objects.get_or_create(firstname=AAauthor['author_first_name'],
-                                                      lastname=AAauthor['author_last_name'])
-                # print(author[0])
-                book.book_author.through.objects.create(author=author[0], book=book)
+                                                      lastname=AAauthor['author_last_name'])[0]
 
+                book.book_author.through.objects.create(author=author, book=book)
+    #
 
     return render_to_response("library/import.html", {'import_data': a})
 
@@ -235,12 +148,6 @@ def testemail(request):
     email.send()
 
 
-def testck(request):
-    args = {}
-    args.update(csrf(request))
-    return render_to_response("library/ckeditortest.html", args)
-
-
 @login_required
 def downloadgenres(request):
     with open("file.json", "w") as out:
@@ -248,30 +155,10 @@ def downloadgenres(request):
         out.write(data)
     fp = open('file.json', 'rb')
     response = HttpResponse(FileWrapper(fp), content_type=' application/octet-stream')
-    response['Content-Disposition'] = 'attachment; filename=genres.xml'
+    response['Content-Disposition'] = 'attachment; filename=stations.xml'
     return response
 
 
-@login_required
-def testlink(request):
-    book = Book.objects.get(book_md5='BE3B3E2B29A2C0DEEAB923336A763CE4')
-    author = Author.objects.get(firstname='Владимир', lastname='Величко')
-    print(book)
-    book.book_author.through.objects.create(author=author, book=book[0])
-
-    # print(author)
-    # book.book_author.add(author)
-    # book.save()
-
-    # BookAuthor.objects.create(book=book,author=author)
-    # print(BookAuthor)
-    # BookAuthor.save()
-    print(book)
-    print(author)
-
-
-
-    # Book.objects.create_book("Pride and Prejudice")
 
 @login_required
 def iphone_location(request):

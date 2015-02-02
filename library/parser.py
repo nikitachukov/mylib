@@ -16,21 +16,25 @@ def find_files_by_mask(location, mask):
             if file.endswith(mask):
                 find_files += [[os.path.join(root, file),
                                 hashlib.md5(open(os.path.join(root, file), 'rb').read()).hexdigest().upper()]]
-    print(location, mask)
     return find_files
 
 
 def check_file_md5(md5):
-    return True
+    if md5 in ['7B0BB8B28BAA7C9655D75886132CB7BE','0F19F5D897E468587734CD5A23D5287A']:
+        return False
+    else:
+        return True
 
 
 def parse_files(files):
     ns = "{http://www.gribuser.ru/xml/fictionbook/2.0}"
     Books = []
+    Doubles = []
+    Errors=[]
 
     for file in files[:]:
-        # print(file[0])
         if check_file_md5(file[1]):
+
             try:
                 parser = etree.XMLParser(recover=True)
                 book = etree.parse(file[0], parser)
@@ -64,6 +68,7 @@ def parse_files(files):
                                     child.attrib.get('{http://www.w3.org/1999/xlink}href')[1:]):
 
                                 covers_store_path = os.path.join(settings.MEDIA_ROOT, 'covers')
+                                # covers_store_path='/home/nikitos/books/covers'
 
                                 if not os.path.exists(covers_store_path):
                                     os.makedirs(covers_store_path)
@@ -94,28 +99,39 @@ def parse_files(files):
 
                 Books.append(Book)
             except Exception as E:
-                print(E)
+                Errors.append({'filename':file[0],'md5':file[1]})
+                
+                
 
 
         else:
-            print("re")
+            Doubles.append({'filename':file[0],'md5':file[1]})
             # todo: repeat action
-    return Books
+    return Books,Doubles,Errors
 
 
 def main():
-    import platform
+    
 
-    if platform.node().upper() == "LENOVO":
-        path = "/home/nikitos/Downloads/S.T.A.L.K.E.R__[rutracker.org]/"
-    else:
-        path = "c:\\Downloads\\S.T.A.L.K.E.R__[rutracker.org]\\fb2+++\\"
+    
+    path='/home/nikitos/books'
 
     files = find_files_by_mask(path, ".fb2")
-    # print(parse_files(files))
 
-    for book in parse_files(files):
-        print(book)
+    from pprint import pprint
+
+    Books,Doubles,Errors=parse_files(files)
+
+    # pprint(parse_files(files))
+    # print()
+
+    print(Doubles)
+    print('*'*80)
+    print(Errors)
+    print('*'*80)
+    print(Books)
+
+
         # if 'Authors' in book.keys():
         # print(book['Authors'])
 
