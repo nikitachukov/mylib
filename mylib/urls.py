@@ -11,8 +11,8 @@ urlpatterns = patterns('',
 
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^polls/', include('polls.urls', namespace="polls")),
-                       url(r'^', include('article.urls')),
                        url(r'^library/', include('library.urls', namespace="library")),
+                       url(r'^blog/', include('article.urls', namespace="article")),
                        url(r'^trains/', include('trains.urls', namespace="trains")),
 
                        url(r'^auth/', include('account.urls', namespace="account")),
