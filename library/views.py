@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.core import serializers
 from django.core.servers.basehttp import FileWrapper
 from library.models import *
-from library.parser import *
+from library.fb2_parser0 import *
 from time import time,sleep
 from platform import node
 import os
