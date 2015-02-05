@@ -1,93 +1,94 @@
-
 import zipfile
 from lxml import etree
 import os
 from pprint import pprint
+import hashlib
+
+
 def pase_epub(filename):
     try:
-        try:
-            z = zipfile.ZipFile( filename, 'r')
-            content= z.read('META-INF/container.xml')
-            xslt=b'''\
-        <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-        <xsl:output method="xml" indent="no"/>
+        res = {'filename': os.path.basename(filename)}
+        res = {'md5': hashlib.md5(open(filename, 'rb').read()).hexdigest().upper()}
+        zip = zipfile.ZipFile(filename, 'r')
+        container_before_transfomation = zip.read('META-INF/container.xml')
+        xslt = b'''\
+    <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:output method="xml" indent="no"/>
 
-        <xsl:template match="/|comment()|processing-instruction()">
-            <xsl:copy>
-              <xsl:apply-templates/>
-            </xsl:copy>
-        </xsl:template>
+    <xsl:template match="/|comment()|processing-instruction()">
+        <xsl:copy>
+          <xsl:apply-templates/>
+        </xsl:copy>
+    </xsl:template>
 
-        <xsl:template match="*">
-            <xsl:element name="{local-name()}">
-              <xsl:apply-templates select="@*|node()"/>
-            </xsl:element>
-        </xsl:template>
+    <xsl:template match="*">
+        <xsl:element name="{local-name()}">
+          <xsl:apply-templates select="@*|node()"/>
+        </xsl:element>
+    </xsl:template>
 
-        <xsl:template match="@*">
-            <xsl:attribute name="{local-name()}">
-              <xsl:value-of select="."/>
-            </xsl:attribute>
-        </xsl:template>
-        </xsl:stylesheet>
-        '''
-            transform=etree.XSLT(etree.XML(xslt))
-            dom=transform(etree.XML(content))
-            rootfile_location=dom.xpath('/container/rootfiles/rootfile')[0].get('full-path')
+    <xsl:template match="@*">
+        <xsl:attribute name="{local-name()}">
+          <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
+    </xsl:stylesheet>
+    '''
+        transform = etree.XSLT(etree.XML(xslt))
+        container = transform(etree.XML(container_before_transfomation))
+        rootfile_location = container.xpath('/container/rootfiles/rootfile')[0].get('full-path')
+        rootfile_before_transformation = zip.read(rootfile_location)
+        rootfile = transform(etree.XML(rootfile_before_transformation))
 
-            # print(rootfile_location)
-
-            content= z.read(rootfile_location)
-            dom=transform(etree.XML(content))
-
-            # print(etree.tostring(dom, pretty_print=True))
-            # print('*'*80)
-            # print(dom.xpath('/package/metadata/title/text()')[0])
-            # print(dom.xpath('/package/metadata/creator/text()'))
-            # print(dom.xpath('/package/metadata/language/text()')[0])
-            # print(tree.xpath('/soft/os/item[@name="linux"]')[0].get('dist'))
-            # cover=
-
-            # print(cover)
-            cover_filename=dom.xpath('/package/manifest/item[@id="%s"]'%(dom.xpath('/package/metadata/meta[@name="cover"]')[0].get('content')))[0].get('href')
-            print(cover_filename)
-            print('*'*80)
+        for s in ['title', 'language', 'creator', 'date', 'identifier', 'description']:
             try:
-                z.extract(cover_filename,'d:/test/')
-            except KeyError as E:
-                for dir in set([('/'.join(filename.split('/')[:-1])) for filename  in z.namelist()]):
+                res[s] = str(rootfile.xpath('/package/metadata/%s/text()' % s)[0])
+            except IndexError:
+                res[s] = None
+                continue
+        try:
+            res['cover_filename'] = rootfile.xpath('/package/manifest/item[@id="%s"]' %
+                                                   (rootfile.xpath('/package/metadata/meta[@name="cover"]')
+                                                    [0].get('content')))[0].get('href')
+
+            try:
+                for inzip_dir in (list(set([('/'.join(filename.split('/')[:-1])) for filename in zip.namelist()]))):
+                    candidate = os.path.join('', *[inzip_dir, os.path.basename(res['cover_filename'])])
                     try:
-                        coverfile=z.read('/'.join([dir,cover_filename]))
-                        print(len(cover_filename))
-                    except KeyError:
-                        pass
-                    except Exception as E:
-                        print(E)
+                        cover_file = zip.read(candidate)
+                        if cover_file:
+                            new_cover_filename = os.path.join('/tmp/test',res['md5']+os.path.splitext(res['cover_filename'])[1])
+                            with open(new_cover_filename ,'wb') as f:
+                                f.write(cover_file)
+                            res['new_cover_filename']=new_cover_filename
+                    except:
+                        continue
+            except:
+                res['cover_filename'] = None
+                res['new_cover_filename'] = None
 
-
-
-
-
-            except Exception as E:
-                print(E)
-        except Exception as E:
-                print(E)
-                return None
-
-
-    except  Exception as E:
+            return res
+        except:
+            pass
+        return res
+    except zipfile.BadZipfile as E:
         print(E)
-        return None
-
+        return
 
 
 if __name__ == '__main__':
 
-    for root, dirs, files in os.walk("d://test/"):
+    for root, dirs, files in os.walk("/tmp/test/"):
         for file in files:
             if file.endswith(".epub"):
-                print('*'*80)
-                print(os.path.join(root, file))
-                pase_epub(filename=os.path.join(root, file))
-    # pase_epub(filename="D:\\test.epub")
-    # pase_epub(filename="d:\Dropbox\\books\epub\djobs_bio.epub")
+
+                x=pase_epub(filename=os.path.join(root, file))
+                y=[]
+                for tag in ['title','md5','new_cover_filename','cover_filename']:
+                    y.append(x[tag])
+                print(y)
+
+
+
+                # pase_epub(filename="D:\\test.epub")
+                # pase_epub(filename="d:\Dropbox\\books\epub\djobs_bio.epub")
