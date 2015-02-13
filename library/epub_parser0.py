@@ -5,12 +5,12 @@ from pprint import pprint
 import hashlib
 
 
-def pase_epub(filename):
+def parse_epub(filename):
     try:
-        res = {'filename': os.path.basename(filename)}
-        res = {'md5': hashlib.md5(open(filename, 'rb').read()).hexdigest().upper()}
+        result = {'filename': os.path.basename(filename),
+                  'md5': hashlib.md5(open(filename, 'rb').read()).hexdigest().upper()}
         zip = zipfile.ZipFile(filename, 'r')
-        container_before_transfomation = zip.read('META-INF/container.xml')
+        # container_before_transfomation =
         xslt = b'''\
     <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:output method="xml" indent="no"/>
@@ -35,42 +35,41 @@ def pase_epub(filename):
     </xsl:stylesheet>
     '''
         transform = etree.XSLT(etree.XML(xslt))
-        container = transform(etree.XML(container_before_transfomation))
+        container = transform(etree.XML(zip.read('META-INF/container.xml')))
         rootfile_location = container.xpath('/container/rootfiles/rootfile')[0].get('full-path')
-        rootfile_before_transformation = zip.read(rootfile_location)
-        rootfile = transform(etree.XML(rootfile_before_transformation))
+        rootfile = transform(etree.XML(zip.read(rootfile_location)))
 
-        for s in ['title', 'language', 'creator', 'date', 'identifier', 'description']:
+        for tag in ['title', 'language', 'creator', 'date', 'identifier', 'description']:
             try:
-                res[s] = str(rootfile.xpath('/package/metadata/%s/text()' % s)[0])
+                result[tag] = str(rootfile.xpath('/package/metadata/%s/text()' % tag)[0])
             except IndexError:
-                res[s] = None
+                result[tag] = None
                 continue
+
         try:
-            res['cover_filename'] = rootfile.xpath('/package/manifest/item[@id="%s"]' %
-                                                   (rootfile.xpath('/package/metadata/meta[@name="cover"]')
-                                                    [0].get('content')))[0].get('href')
+            result['cover_filename'] = rootfile.xpath('/package/manifest/item[@id="%s"]' %
+                                                      (rootfile.xpath('/package/metadata/meta[@name="cover"]')
+                                                       [0].get('content')))[0].get('href')
 
-            try:
-                for inzip_dir in (list(set([('/'.join(filename.split('/')[:-1])) for filename in zip.namelist()]))):
-                    candidate = os.path.join('', *[inzip_dir, os.path.basename(res['cover_filename'])])
-                    try:
-                        cover_file = zip.read(candidate)
-                        if cover_file:
-                            new_cover_filename = os.path.join('/tmp/test',res['md5']+os.path.splitext(res['cover_filename'])[1])
-                            with open(new_cover_filename ,'wb') as f:
-                                f.write(cover_file)
-                            res['new_cover_filename']=new_cover_filename
-                    except:
-                        continue
-            except:
-                res['cover_filename'] = None
-                res['new_cover_filename'] = None
+            for zipdir in list(set([('/'.join(filename.split('/')[:-1])) for filename in zip.namelist()])):
+                try:
+                    if not zipdir:
+                        cover_file = zip.read(result['cover_filename'])
 
-            return res
+                    else:
+                        cover_file = zip.read(zipdir + '/' + result['cover_filename'])
+
+                    result['new_cover_filename'] = os.path.join('D:\\test_cases\\epub', result['md5'] +
+                                                                os.path.splitext(result['cover_filename'])[1])
+                    with open(result['new_cover_filename'], 'wb') as f:
+                        f.write(cover_file)
+                    break
+                except:
+                    continue
         except:
             pass
-        return res
+
+        return result
     except zipfile.BadZipfile as E:
         print(E)
         return
@@ -78,17 +77,7 @@ def pase_epub(filename):
 
 if __name__ == '__main__':
 
-    for root, dirs, files in os.walk("/tmp/test/"):
+    for root, dirs, files in os.walk("D:\\test"):
         for file in files:
             if file.endswith(".epub"):
-
-                x=pase_epub(filename=os.path.join(root, file))
-                y=[]
-                for tag in ['title','md5','new_cover_filename','cover_filename']:
-                    y.append(x[tag])
-                print(y)
-
-
-
-                # pase_epub(filename="D:\\test.epub")
-                # pase_epub(filename="d:\Dropbox\\books\epub\djobs_bio.epub")
+                pprint(parse_epub(filename=os.path.join(root, file)))
