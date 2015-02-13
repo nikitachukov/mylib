@@ -8,8 +8,6 @@ import base64
 from django.conf import settings
 
 
-
-
 def find_files_by_mask(location, mask):
     find_files = []
     for root, dirs, files in os.walk(location):
@@ -21,7 +19,7 @@ def find_files_by_mask(location, mask):
 
 
 def check_file_md5(md5):
-    if md5 in ['7B0BB8B28BAA7C9655D75886132CB7BE','0F19F5D897E468587734CD5A23D5287A']:
+    if md5 in ['7B0BB8B28BAA7C9655D75886132CB7BE', '0F19F5D897E468587734CD5A23D5287A']:
         return False
     else:
         return True
@@ -31,7 +29,7 @@ def parse_files(files):
     ns = "{http://www.gribuser.ru/xml/fictionbook/2.0}"
     Books = []
     Doubles = []
-    Errors=[]
+    Errors = []
 
     for file in files[:]:
         if check_file_md5(file[1]):
@@ -100,41 +98,38 @@ def parse_files(files):
 
                 Books.append(Book)
             except Exception as E:
-                Errors.append({'filename':file[0],'md5':file[1]})
-                
-                
+                Errors.append({'filename': file[0], 'md5': file[1]})
+
+
 
 
         else:
-            Doubles.append({'filename':file[0],'md5':file[1]})
+            Doubles.append({'filename': file[0], 'md5': file[1]})
             # todo: repeat action
-    return Books,Doubles,Errors
+    return Books, Doubles, Errors
 
 
 def main():
-    
-
-    
-    path='/home/nikitos/books'
+    path = '/home/nikitos/books'
 
     files = find_files_by_mask(path, ".fb2")
 
     from pprint import pprint
 
-    Books,Doubles,Errors=parse_files(files)
+    Books, Doubles, Errors = parse_files(files)
 
     # pprint(parse_files(files))
     # print()
 
     print(Doubles)
-    print('*'*80)
+    print('*' * 80)
     print(Errors)
-    print('*'*80)
+    print('*' * 80)
     print(Books)
 
 
-        # if 'Authors' in book.keys():
-        # print(book['Authors'])
+    # if 'Authors' in book.keys():
+    # print(book['Authors'])
 
 
 if __name__ == "__main__":

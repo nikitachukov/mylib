@@ -47,9 +47,7 @@ def parse_epub(filename):
                 continue
 
         try:
-            result['cover_filename'] = rootfile.xpath('/package/manifest/item[@id="%s"]' %
-                                                      (rootfile.xpath('/package/metadata/meta[@name="cover"]')
-                                                       [0].get('content')))[0].get('href')
+            result['cover_filename'] = rootfile.xpath('/package/manifest/item[@id="%s"]' % (rootfile.xpath('/package/metadata/meta[@name="cover"]')[0].get('content')))[0].get('href')
 
             for zipdir in list(set([('/'.join(filename.split('/')[:-1])) for filename in zip.namelist()])):
                 try:
