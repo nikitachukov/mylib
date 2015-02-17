@@ -21,7 +21,22 @@ from django.http import HttpResponse
 @login_required
 def BookList(request):
     book_list = Book.objects.all()
-    paginator = Paginator(book_list, 10)  # Show 25 contacts per page
+    paginator = Paginator(book_list, 5)  # Show 25 contacts per page
+    page = request.GET.get('page')
+    try:
+        books = paginator.page(page)
+    except PageNotAnInteger:
+        books = paginator.page(1)
+    except EmptyPage:
+        books = paginator.page(paginator.num_pages)
+    return render_to_response("library/books_old.html", {'books': books})
+
+
+
+@login_required
+def Books(request):
+    book_list = Book.objects.all()
+    paginator = Paginator(book_list, 5)  # Show 25 contacts per page
     page = request.GET.get('page')
     try:
         books = paginator.page(page)
@@ -30,7 +45,6 @@ def BookList(request):
     except EmptyPage:
         books = paginator.page(paginator.num_pages)
     return render_to_response("library/books.html", {'books': books})
-
 
 
 @login_required

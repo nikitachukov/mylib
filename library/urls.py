@@ -6,7 +6,8 @@ from django.conf.urls import patterns, url
 from library import views
 
 urlpatterns = patterns('',
-                       url(r'^books/$', views.BookList, name='books'),
+                       url(r'^books/$', views.Books, name='books'),
+                       url(r'^books_old/$', views.BookList, name='books_old'),
                        url(r'^import/$', views.book_import, name='book_import'),
                        url(r'^delete/$', views.delete, name='book_delte'),
                        url(r'^list/$', views.BookList, name='book_list'),
