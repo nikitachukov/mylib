@@ -38,7 +38,7 @@ class Book(models.Model):
         return self.book_name
 
     book_name = models.CharField(max_length=200, verbose_name='Название книги')
-    book_annotation = models.TextField(verbose_name='Аннотация к книги', blank=True)
+    book_annotation = models.TextField(verbose_name='Аннотация к книги', blank=True,null=True)
     book_date = models.DateTimeField(auto_now_add=True)
     book_url = models.URLField(blank=True)
     book_likes = models.IntegerField(default=0)

@@ -1,4 +1,4 @@
-mysql -h localhost -u root < recreate.sql
+mysql -h localhost -u root -p < recreate.sql
 ./manage.py migrate --noinput
 ./manage.py loaddata auth
 ./manage.py loaddata stations

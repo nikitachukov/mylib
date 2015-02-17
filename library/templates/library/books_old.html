@@ -14,7 +14,10 @@
             {%if book.cover%}
             <img src=" {{book.cover.url }}" />
             {% endif %}
-
+            {% for author in book.book_author.all %}
+  {{ author.firstname }}
+  {{ author.lastname }}
+{% endfor %}
         </li>
     {% endfor %}
 </ul>

@@ -57,7 +57,7 @@ def book_import(request):
     Errors=[]
 
 
-    files = find_files_by_mask(settings.BOOKS_LOCATION, ".fb2")
+    files = find_files_by_mask(settings.BOOKS_LOCATION, ".fb2")[:10]
 
     a = []
 
@@ -71,8 +71,9 @@ def book_import(request):
             title = file['title']
         if 'md5' in file.keys():
             md5 = file['md5']
-        if 'Annotation' in file.keys():
-            annotation = file['Annotation']
+        # if 'Annotation' in file.keys():
+        #     annotation = file.get('Annotation')
+            annotation = file.get('Annotation')
 
         if 'cover_file_name' in file.keys():
             cover_file_name = file['cover_file_name']
