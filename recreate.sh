@@ -1,4 +1,4 @@
-mysql -h localhost -u root < recreate.sql
+mysql -h localhost -p -u root --password=admin4all < recreate.sql
 ./manage.py migrate --noinput
 ./manage.py loaddata auth
 ./manage.py loaddata stations
