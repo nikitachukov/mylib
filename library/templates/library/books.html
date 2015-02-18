@@ -38,7 +38,8 @@
                             </div>
 
                         {% endfor %}
-                        <h4>{{ book.book_name }}</h4>
+                        <h4><a href=" {% url 'library:book' book.id  %}" >{{ book}}</a></h4>
+
                     </div>
 
                 </div>

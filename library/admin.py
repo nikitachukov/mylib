@@ -10,7 +10,7 @@ class AuthorInline(admin.TabularInline):
 
 class BookAdmin(admin.ModelAdmin):
 
-    fields = ['book_name', 'book_genre', 'book_annotation',  'book_md5','cover',]
+    fields = ['book_name', 'book_genre', 'book_annotation',  'book_md5','cover','new_file_name']
     ordering = ('book_name',)
     search_fields = ('book_name', 'book_md5',)
     list_filter = ['book_name', 'book_genre', 'book_author']

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
+from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response,redirect
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.core.servers.basehttp import FileWrapper
@@ -17,6 +18,9 @@ from pprint import pprint
 import platform
 import json
 from django.http import HttpResponse
+from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
+from django.http.response import Http404
 
 @login_required
 def BookList(request):
@@ -34,7 +38,7 @@ def BookList(request):
 
 
 @login_required
-def Books(request):
+def books(request):
     book_list = Book.objects.all()
     paginator = Paginator(book_list, 5)  # Show 25 contacts per page
     page = request.GET.get('page')
@@ -45,6 +49,17 @@ def Books(request):
     except EmptyPage:
         books = paginator.page(paginator.num_pages)
     return render_to_response("library/books.html", {'books': books})
+
+@login_required
+def book(request,book_id):
+    try:
+        args={}
+        args['book'] = Book.objects.get(id=book_id)
+        args.update(csrf(request))
+        return render_to_response("library/book.html",args)
+    except ObjectDoesNotExist:
+        # raise Http404
+        return redirect(reverse('library:books'))
 
 
 @login_required
@@ -61,7 +76,7 @@ def book_import(request):
 
     a = []
 
-    Books,Doubles,Errors=parse_files(files)
+    Books,Doubles,Errors=parse_files(files,settings.MEDIA_ROOT)
     for file in Books:
 
         if 'filename' in file.keys():
@@ -74,6 +89,9 @@ def book_import(request):
         # if 'Annotation' in file.keys():
         #     annotation = file.get('Annotation')
             annotation = file.get('Annotation')
+
+        if 'new_file_name' in file.keys():
+            new_file_name = file.get('new_file_name')
 
         if 'cover_file_name' in file.keys():
             cover_file_name = file['cover_file_name']
@@ -96,7 +114,8 @@ def book_import(request):
              book_annotation=annotation,
              book_genre=genre,
              # cover_file_name=cover_file_name,
-             cover=cover_image
+             cover=cover_image,
+             new_file_name=new_file_name
         )
 
         a.append(book)
