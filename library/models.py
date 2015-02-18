@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Author(models.Model):
@@ -38,7 +39,7 @@ class Book(models.Model):
         return self.book_name
 
     book_name = models.CharField(max_length=200, verbose_name='Название книги')
-    book_annotation = models.TextField(verbose_name='Аннотация к книги', blank=True)
+    book_annotation = models.TextField(verbose_name='Аннотация к книги', blank=True,null=True)
     book_date = models.DateTimeField(auto_now_add=True)
     book_url = models.URLField(blank=True)
     book_likes = models.IntegerField(default=0)
@@ -46,11 +47,21 @@ class Book(models.Model):
     book_md5 = models.CharField(max_length=32)
     book_genre = models.ForeignKey(BookGenre)
     cover = models.ImageField(blank=True)
+    new_file_name=models.CharField(max_length=256)
 
 
 class BookAuthor(models.Model):
     author = models.ForeignKey(Author)
     book = models.ForeignKey(Book)
+
+class TempUrl(models.Model):
+    url_hash = models.CharField("Url", blank=False, max_length=32, unique=True)
+    expires = models.DateTimeField()
+    count = models.IntegerField(default=0)
+    url_owner = models.ForeignKey(User)
+    book = models.ForeignKey(Book)
+
+
 
 
 

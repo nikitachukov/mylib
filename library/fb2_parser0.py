@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 __author__ = 'ChukovNA'
-import os
+import os,sys
 import hashlib
 from lxml import etree
 import base64
-from django.conf import settings
+import traceback
+import shutil
 
 
 def find_files_by_mask(location, mask):
@@ -25,7 +26,7 @@ def check_file_md5(md5):
         return True
 
 
-def parse_files(files):
+def parse_files(files,media_root):
     ns = "{http://www.gribuser.ru/xml/fictionbook/2.0}"
     Books = []
     Doubles = []
@@ -65,8 +66,8 @@ def parse_files(files):
                             binary = book.getroot().find(ns + "binary")
                             if (binary.attrib['id'] ==
                                     child.attrib.get('{http://www.w3.org/1999/xlink}href')[1:]):
-
-                                covers_store_path = os.path.join(settings.MEDIA_ROOT, 'covers')
+                                print(os.path.join(media_root, 'covers'))
+                                covers_store_path = os.path.join(media_root, 'covers')
                                 # covers_store_path='/home/nikitos/books/covers'
 
                                 if not os.path.exists(covers_store_path):
@@ -96,9 +97,18 @@ def parse_files(files):
                         Authors.append(Author)
                         Book["Authors"] = Authors
 
+
+                Book['new_file_name']=os.path.join(media_root, 'books',Book['md5']+'.fb2')
+                shutil.copyfile(file[0],Book['new_file_name'])
+                # if  settings.DEBUG:
+                #     book['new_file_name']=
+
+                    # print(file[0])
+
                 Books.append(Book)
             except Exception as E:
                 Errors.append({'filename': file[0], 'md5': file[1]})
+                print(traceback.format_exc())
 
 
 
@@ -110,22 +120,27 @@ def parse_files(files):
 
 
 def main():
-    path = '/home/nikitos/books'
+    path = 'D:/media/import/'
 
     files = find_files_by_mask(path, ".fb2")
 
+    # print(files[:10])
+
     from pprint import pprint
 
-    Books, Doubles, Errors = parse_files(files)
+    Books, Doubles, Errors = parse_files(files[:1],'D:\\media\\')
 
-    # pprint(parse_files(files))
+
+
+
+    pprint(Books)
     # print()
 
-    print(Doubles)
-    print('*' * 80)
-    print(Errors)
-    print('*' * 80)
-    print(Books)
+    # print(Doubles)
+    # print('*' * 80)
+    # print(Errors)
+    # print('*' * 80)
+    # print(Books)
 
 
     # if 'Authors' in book.keys():

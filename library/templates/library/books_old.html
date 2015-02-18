@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+
+<ul>
+    {% for book in books %}
+        <li>
+            {{ book }}
+            {%if book.cover%}
+            <img src=" {{book.cover.url }}" />
+            {% endif %}
+            {% for author in book.book_author.all %}
+  {{ author.firstname }}
+  {{ author.lastname }}
+{% endfor %}
+        </li>
+    {% endfor %}
+</ul>
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if books.has_previous %}
+            <a href="?page={{ books.previous_page_number }}">←</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ books.number }} of {{ books.paginator.num_pages }}.
+        </span>
+
+        {% if books.has_next %}
+            <a href="?page={{ books.next_page_number }}">→</a>
+        {% endif %}
+    </span>
+</div>
+
+
+</body>
+</html>

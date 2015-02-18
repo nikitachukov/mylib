@@ -85,7 +85,7 @@ USE_TZ = True
 
 
 MEDIA_URL = '/media/'
-
+MEDIA_ROOT = 'D:\\media\\'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
