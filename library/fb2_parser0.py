@@ -8,6 +8,8 @@ import base64
 import traceback
 import shutil
 
+from django.conf import settings
+
 
 def find_files_by_mask(location, mask):
     find_files = []
@@ -124,27 +126,13 @@ def main():
 
     files = find_files_by_mask(path, ".fb2")
 
-    # print(files[:10])
 
     from pprint import pprint
 
-    Books, Doubles, Errors = parse_files(files[:1],'D:\\media\\')
-
-
-
-
-    pprint(Books)
-    # print()
-
-    # print(Doubles)
-    # print('*' * 80)
-    # print(Errors)
-    # print('*' * 80)
-    # print(Books)
-
-
-    # if 'Authors' in book.keys():
-    # print(book['Authors'])
+    # Books, Doubles, Errors = parse_files(files[:1],'D:\\media\\')
+    #
+    # pprint(Books)
+    # pprint()
 
 
 if __name__ == "__main__":
