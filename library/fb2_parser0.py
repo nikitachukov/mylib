@@ -28,7 +28,7 @@ def check_file_md5(md5):
         return True
 
 
-def parse_files(files,media_root):
+def parse_files(files):
     ns = "{http://www.gribuser.ru/xml/fictionbook/2.0}"
     Books = []
     Doubles = []
@@ -68,8 +68,7 @@ def parse_files(files,media_root):
                             binary = book.getroot().find(ns + "binary")
                             if (binary.attrib['id'] ==
                                     child.attrib.get('{http://www.w3.org/1999/xlink}href')[1:]):
-                                print(os.path.join(media_root, 'covers'))
-                                covers_store_path = os.path.join(media_root, 'covers')
+                                covers_store_path = os.path.join(settings.MEDIA_ROOT, 'covers')
                                 # covers_store_path='/home/nikitos/books/covers'
 
                                 if not os.path.exists(covers_store_path):
@@ -100,12 +99,8 @@ def parse_files(files,media_root):
                         Book["Authors"] = Authors
 
 
-                Book['new_file_name']=os.path.join(media_root, 'books',Book['md5']+'.fb2')
+                Book['new_file_name'] = os.path.join(settings.MEDIA_ROOT, 'books', Book['md5']+'.fb2')
                 shutil.copyfile(file[0],Book['new_file_name'])
-                # if  settings.DEBUG:
-                #     book['new_file_name']=
-
-                    # print(file[0])
 
                 Books.append(Book)
             except Exception as E:
@@ -119,23 +114,5 @@ def parse_files(files,media_root):
             Doubles.append({'filename': file[0], 'md5': file[1]})
             # todo: repeat action
     return Books, Doubles, Errors
-
-
-def main():
-    path = 'D:/media/import/'
-
-    files = find_files_by_mask(path, ".fb2")
-
-
-    from pprint import pprint
-
-    # Books, Doubles, Errors = parse_files(files[:1],'D:\\media\\')
-    #
-    # pprint(Books)
-    # pprint()
-
-
-if __name__ == "__main__":
-    main()
 
 

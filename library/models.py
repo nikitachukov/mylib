@@ -47,7 +47,7 @@ class Book(models.Model):
     book_md5 = models.CharField(max_length=32)
     book_genre = models.ForeignKey(BookGenre)
     cover = models.ImageField(blank=True)
-    new_file_name=models.CharField(max_length=256)
+    new_file_name = models.CharField(max_length=256)
 
 
 class BookAuthor(models.Model):

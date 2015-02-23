@@ -8,6 +8,7 @@ from trains.models import *
 # Create your views here.
 
 # @csrf_exempt
+@login_required
 def stations_list_ajax(request):
     data = serializers.serialize("json", Stations.objects.all())
     data = {'count': 0,
