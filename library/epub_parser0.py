@@ -36,7 +36,7 @@ def parse_epub(filename):
     '''
         transform = etree.XSLT(etree.XML(xslt))
         container = transform(etree.XML(zip.read('META-INF/container.xml')))
-        rootfile_location = container.xpath('/container/rootfiles/rootfile')[0].get('full-path')
+        rootfile_location = container.xpath('/container/rootfiles/rootfile/')[0].get('full-path')
         rootfile = transform(etree.XML(zip.read(rootfile_location)))
 
         for tag in ['title', 'language', 'creator', 'date', 'identifier', 'description']:

@@ -56,21 +56,22 @@ def parser(files):
     </xsl:template>
     </xsl:stylesheet>
     '''
-
-                # transform = etree.XSLT(etree.XML(xslt))
-                # book = transform(etree.parse(file[0], etree.XMLParser(recover=True)))
-                #
-                #
-                # description=book.getroot().find("description/")
-                # print(description)
-                # rootfile = transform(etree.XML(zip.read(rootfile_location)))
-
-
                 transform = etree.XSLT(etree.XML(xslt))
-                container = transform(etree.XML(file[0]))
-                # rootfile_location = container.xpath('/container/rootfiles/rootfile')[0].get('full-path')
-                # rootfile = transform(etree.XML(zip.read(rootfile_location)))
+                book = transform(xmlfile)
+                description = book.getroot().find("description/")
 
+                print(file[0])
+                print(book.xpath('/FictionBook/description/title-info/genre/text()'))
+                print(book.xpath('/FictionBook/description/title-info/book-title/text()'))
+                # print(book.xpath('/FictionBook/description/title-info/annotation/p/text()'))
+                # [0].get('text')
+
+
+                nodes = book.xpath('/FictionBook/description/title-info/annotation'
+                                   '') # Открываем раздел
+                for node in nodes: # Перебираем элементы
+                    # print (node.tag,node.keys(),node.values())
+                    print( 'text =',[node.text]) # Выводим текст элемента
 
             except Exception as E:
                 Errors.append({'filename': file[0], 'md5': file[1]})
@@ -85,7 +86,7 @@ def parser(files):
 
 
 if __name__=='__main__':
-    files = find_files_by_mask('/home/nikitos/media/books/', ".fb2")[:1]
+    files = find_files_by_mask('/home/nikitos/media/books/test/', ".fb2")[:1]
     parser(files)
 
 
