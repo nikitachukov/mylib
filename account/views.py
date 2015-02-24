@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response, redirect
 from django.contrib import auth
+from django.contrib.auth.models import User
 from django.core.context_processors import csrf
 
 # Create your views here.
@@ -24,14 +25,14 @@ def login(request):
         return render_to_response('account/login.html', args)
 
 
-def resetpassord(request):
-    args = {}
-    args.update(csrf(request))
-    if request.POST:
-        pass
-    else:
-        return render_to_response('account/resetpassword.html', args)
-
 def logout(request):
     auth.logout(request)
     return redirect("/")
+
+def createuser(request):
+    try:
+        u = User.objects.create_superuser(username='nikitos', email='xx@xx.ru', password="admin4all")
+        u.save()
+        return render_to_response("account/result_message.html")
+    except Exception as E:
+        return render_to_response("account/result_message.html", {'error_message': {'error_message': str(E)}})

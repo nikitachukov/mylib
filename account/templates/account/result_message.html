@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+{% if error_message %}
+    <ul>
+        <li>
+            {{ error_message.error_message }}
+        </li>
+    </ul>
+{% else %}
+    <p>No errors</p>
+{% endif %}
+
+</body>
+</html>

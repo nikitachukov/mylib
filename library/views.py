@@ -3,43 +3,19 @@ import logging
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, redirect
-from django.contrib.auth.models import User
 from django.core import serializers
 from django.core.servers.basehttp import FileWrapper
 from library.models import *
 from library.fb2_parser0 import *
-from time import time, sleep
-from platform import node
+from time import time
 import os
 import uuid
-import base64
 from django.core.context_processors import csrf
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import django
-from pprint import pprint
-import platform
 import json
-import string
-import random
 from django.http import HttpResponse
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
-from django.http import HttpRequest
-
-
-@login_required
-def BookList(request):
-    book_list = Book.objects.all()
-    paginator = Paginator(book_list, 5)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    try:
-        books = paginator.page(page)
-    except PageNotAnInteger:
-        books = paginator.page(1)
-    except EmptyPage:
-        books = paginator.page(paginator.num_pages)
-    return render_to_response("library/books_old.html", {'books': books})
 
 
 @login_required
@@ -155,29 +131,6 @@ def book_import(request):
     return render_to_response("library/import.html", {'import_data': a, 'time': time() - start})
 
 
-def author_search(request):
-    pass
-
-
-@login_required
-def osinfo(request):
-    return render_to_response("library/osinfo.html", {'osinfo': {
-        'nodename': platform.node(),
-        'version': platform.python_implementation() + platform.python_version(),
-        'arch': platform.system() + ' ' + platform.version() + ' ' + platform.architecture()[0],
-        'processor': platform.processor(),
-        'django': 'Django ' + django.get_version()}})
-
-
-def createuser(request):
-    try:
-        u = User.objects.create_superuser(username='nikitos', email='xx@xx.ru', password="admin4all")
-        u.save()
-        return render_to_response("library/result_message.html")
-    except Exception as E:
-        return render_to_response("library/result_message.html", {'error_message': {'error_message': str(E)}})
-
-
 @login_required
 def delete(request):
     try:
@@ -189,19 +142,6 @@ def delete(request):
 
 
 @login_required
-def testemail(request):
-    from django.core.mail import EmailMessage
-
-    email = EmailMessage('Hello', """
-    Email from django
-    reset password link
-    %s
-    """ % (uuid.uuid4()), to=['nikitachukov@me.com'])
-
-    email.send()
-
-
-@login_required
 def downloadgenres(request):
     with open("file.json", "w") as out:
         data = serializers.serialize("xml", BookGenre.objects.all())
@@ -210,28 +150,3 @@ def downloadgenres(request):
     response = HttpResponse(FileWrapper(fp), content_type=' application/octet-stream')
     response['Content-Disposition'] = 'attachment; filename=stations.xml'
     return response
-
-
-@login_required
-def iphone_location(request):
-    from django.conf import settings
-
-    print(settings.ICLOUD_USER)
-    print(settings.ICLOUD_PASSWORD)
-
-    from pyicloud import PyiCloudService
-
-    api = PyiCloudService(settings.ICLOUD_USER, settings.ICLOUD_PASSWORD)
-    for index, item in enumerate(api.devices):
-        if item.status()['name'] == 'Iphone_nikitos':
-            location = item.location()
-
-            pprint(location)
-
-            return render_to_response("library/map.html",
-                                      {'location':
-                                           {'latitude': str(location['latitude']),
-                                            'longitude': str(location['longitude']),
-                                            'horizontalAccuracy': str(location['horizontalAccuracy'])
-
-                                           }})

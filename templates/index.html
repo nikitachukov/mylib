@@ -18,10 +18,8 @@
 
 <b>General</b>
 <li><a href="{% url 'admin:index' %}">admin</a></li>
-<li><a href="{% url 'library:osinfo' %}">osinfo</a></li>
-<li><a href="{% url 'library:createuser' %}">createuser</a></li>
-<li><a href="{% url 'library:testemail' %}">testemail</a></li>
-<li><a href="{% url 'library:iphone_location' %}">iphone location</a></li>
+
+
 <b>Blog</b>
 <li><a href="{% url 'articles:articles' %}">blog</a></li>
 <b>Library</b>
@@ -32,8 +30,13 @@
 <b>Auth</b>
 <li><a href="{% url 'account:login' %}">login</a></li>
 <li><a href="{% url 'account:logout' %}">logout</a></li>
+<li><a href="{% url 'account:createuser' %}">createuser</a></li>
 <b>Trains\ajax</b>
 <li><a href="{% url 'trains:stations_list_ajax' %}">ajax json</a></li>
 <li><a href="{% url 'trains:stations_list_ajax_my' %}">ajax json jq</a></li>
+<b>Other</b>
+<li><a href="{% url 'other:osinfo' %}">osinfo</a></li>
+<li><a href="{% url 'other:iphone_location' %}">iphone location</a></li>
+
 </body>
 </html>
