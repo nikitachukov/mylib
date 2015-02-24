@@ -3,74 +3,56 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-{% load staticfiles %}
-    <script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
-    <script src="{% static "js/csrf.js" %}"></script>
-    <script src="{% static "js/jquery.qrcode-0.11.0.min.js" %}"></script>
+    {% load staticfiles %}
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'js/csrf.js' %}"></script>
+    <script src="{% static 'js/jquery.qrcode-0.11.0.min.js' %}"></script>
 
 
 </head>
 <body>
 
 <p>{{book}}</p>
+
 <p>{{book.book_genre }}</p>
 <a id="addtolist" href="#" onClick="divFunction()">Добавить в список</a>
 
 <div id="myDiv">http://yandex.ru</div>
 
+{% url 'library:addtolist' book.id %}
+
 
 <script type="text/javascript">
-        function divFunction()
-        {
+    function divFunction() {
 
-            $.ajax({
-                                type: "POST",
-                                url: "http://127.0.0.1:8000/library/addtolist/{{ book.id }}/",
-                                dataType: "json",
-                                success: function (data) {
-                                    $("a#addtolist").text("Добавлено");
-
-{#                                    var obj = data.stations[0].name;#}
-                                    alert(data.hash); // будет выведено "John"
+        $.ajax({
+                    type: "POST",
+                    url: "{% url 'library:addtolist' book.id %}",
+                    dataType: "json",
+                    success: function (data) {
+                        $("a#addtolist").text("Добавлено");
 
 
 
+                        alert(data.hash); // будет выведено "John"
 
 
-                                    $("#myDiv").qrcode(         {
-                                        "render"
-                                    :
-                                        "div",
-                                                "width"
-                                    :
-                                        100,
-                                                "height"
-                                    :
-                                        100,
-                                                "color"
-                                    :
-                                        "#3a3",
-                                                "text"
-                                    :
-                                        "http://192.168.0.1:8080/media/books/E7082E253663A7B2E0480B87506D6B1B.fb2"
-                                    }
-                                    );
-
+                        $("#myDiv").qrcode({
+                                    "render": "div",
+                                    "width": 100,
+                                    "height": 100,
+                                    "color": "#3a3",
+                                    "text": "http://192.168.0.1:8080/media/books/E7082E253663A7B2E0480B87506D6B1B.fb2"
                                 }
-                            }
-                    )
+                        );
+
+                    }
+                }
+        )
 
 
-
-}
+    }
 </script>
-
-
-
-
-
-
-
 
 
 </body>

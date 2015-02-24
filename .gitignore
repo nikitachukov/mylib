@@ -4,3 +4,4 @@ trains/migrations
 library/migrations
 covers
 mylib/local_settings.py
+logs/*

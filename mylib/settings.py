@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     'library',
     'article',
     'polls',
@@ -64,8 +65,8 @@ WSGI_APPLICATION = 'mylib.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
+# 'default': {
+# 'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
@@ -83,9 +84,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/nikitos/media'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
@@ -101,3 +101,56 @@ TEMPLATE_DIRS = (
 
 LOGIN_OUT = '/auth/logout/',
 LOGIN_URL = '/auth/login/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'standard': {
+            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt': "%d/%b/%Y %H:%M:%S"
+        },
+    },
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'django.utils.log.NullHandler',
+        },
+        'systemlog': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'system.log'),
+            'formatter': 'standard',
+        },
+
+
+        'library': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'library.log'),
+            'formatter': 'standard',
+        },
+
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'WARN',
+        },
+        'django.db.backends': {
+            'handlers': ['systemlog'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'library.views': {
+            'handlers': ['console', 'library'],
+            'level': 'DEBUG',
+        },
+    }
+}

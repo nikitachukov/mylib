@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0049)http://bootstrap-3.ru/examples/jumbotron-narrow/# -->
 <html lang="ru">
 <title>books</title>
 {% load staticfiles %}
@@ -15,7 +14,7 @@
     {% for book in books %}
         <div class="row">
             <div id="equalheight">
-                <div class="col-lg-4 demo center-block">
+                <div class="col-lg-4 demo">
                     {% if book.cover %}
                         <div class="center-block">
                             <p align="center"><img src=" {{ book.cover.url }}" style="height:130px"/></p>
@@ -63,7 +62,6 @@
             </ul>
         </nav>
     </div>
-
 
 </div>
 

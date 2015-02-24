@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, redirect
@@ -24,6 +25,7 @@ from django.http import HttpResponse
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
+from django.http import HttpRequest
 
 
 @login_required
@@ -69,23 +71,30 @@ def book(request, book_id):
 @login_required
 def addtolist(request, book_id):
     username = None
+    logger = logging.getLogger(__name__)
+    logger.error('test')
+
     if request.user.is_authenticated():
         username = request.user.username
 
     data = {'status': 'ok', 'username': username, 'hash': str(uuid.uuid4())}
+
+
+
 
     return HttpResponse(json.dumps(data), content_type='application/json')
 
 
 @login_required
 def book_import(request):
+
     start = time()
 
     Books = []
     Doubles = []
     Errors = []
 
-    files = find_files_by_mask(os.path.join(settings.MEDIA_ROOT, 'import'), '.fb2')[:10]
+    files = find_files_by_mask(os.path.join(settings.MEDIA_ROOT, 'import'), '.fb2')[:]
 
     a = []
 
