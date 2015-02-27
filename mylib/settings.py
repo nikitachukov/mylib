@@ -132,6 +132,14 @@ LOGGING = {
             'formatter': 'standard',
         },
 
+
+                'other': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'other.log'),
+            'formatter': 'standard',
+        },
+
         'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
@@ -151,6 +159,9 @@ LOGGING = {
         },
         'library.views': {
             'handlers': ['console', 'library'],
+            'level': 'DEBUG',
+        },        'other.views': {
+            'handlers': ['console', 'other'],
             'level': 'DEBUG',
         },
     }
